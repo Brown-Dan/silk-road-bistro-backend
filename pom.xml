@@ -28,6 +28,8 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <cucumber.version>7.18.0</cucumber.version>
+        <jooq.version>3.19.8</jooq.version>
     </properties>
     <dependencies>
         <dependency>
@@ -37,6 +39,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <!--we need to pull in this dependency as the jooq dependency pulled in by spring-boot-starter-jooq is too
+            low a version to support the jooq-codegen-maven plugin-->
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,7 +64,30 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -105,7 +142,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>3.18.6</version>
+                <version>${jooq.version}</version>
                 <executions>
                     <execution>
                         <id>generate-postgres</id>
@@ -123,10 +160,6 @@
                         <password>local</password>
                     </jdbc>
                     <generator>
-                        <name>org.jooq.codegen.DefaultGenerator</name>
-                        <strategy>
-                            <name>org.jooq.codegen.DefaultGeneratorStrategy</name>
-                        </strategy>
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <inputSchema>ChineseRestaurant</inputSchema>
@@ -145,6 +178,25 @@
                             <packageName>uk.co.autotrader.generated</packageName>
                             <directory>target/generated-sources</directory>
                         </target>
+                        <strategy>
+                            <name>com.jooqCustom.SuffixNameWithJooqEntity</name>
+                            <java>package com.jooqCustom;
+
+                                import org.jooq.codegen.DefaultGeneratorStrategy;
+                                import org.jooq.meta.Definition;
+
+                                public class SuffixNameWithJooqEntity extends DefaultGeneratorStrategy {
+
+                                @Override
+                                public String getJavaClassName(Definition definition, Mode mode) {
+                                if(mode.equals(Mode.POJO)) {
+                                return super.getJavaClassName(definition, mode) + "Entity";
+                                }
+                                return super.getJavaClassName(definition, mode);
+                                }
+
+                                }</java>
+                        </strategy>
                     </generator>
                 </configuration>
             </plugin>
