@@ -148,6 +148,7 @@
                     </generator>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
