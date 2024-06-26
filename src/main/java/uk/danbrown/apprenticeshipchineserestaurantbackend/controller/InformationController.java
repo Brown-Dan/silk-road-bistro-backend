@@ -1,11 +1,11 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Model.ArticleResource;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Service.InformationService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.InformationService;
 
 import java.util.List;
 import java.util.Optional;

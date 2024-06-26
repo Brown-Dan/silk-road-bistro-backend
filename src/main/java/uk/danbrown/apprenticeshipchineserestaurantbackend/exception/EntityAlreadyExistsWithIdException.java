@@ -1,4 +1,4 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Exception;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.exception;
 
 public class EntityAlreadyExistsWithIdException extends Exception {
 

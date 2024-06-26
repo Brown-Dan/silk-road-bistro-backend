@@ -1,4 +1,4 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Error;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error;
 
 import org.springframework.http.HttpStatus;
 

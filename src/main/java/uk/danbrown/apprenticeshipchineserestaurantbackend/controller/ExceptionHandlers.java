@@ -1,17 +1,17 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Error.Error;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Error.ErrorResponse;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Exception.EntityAlreadyExistsWithIdException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Exception.FailureInsertingEntityException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorResponse;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 
 import java.util.Collections;
 
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Error.Error.entityAlreadyExistsWithId;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Error.Error.failureInsertingEntity;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error.entityAlreadyExistsWithId;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error.failureInsertingEntity;
 
 @ControllerAdvice
 public class ExceptionHandlers {

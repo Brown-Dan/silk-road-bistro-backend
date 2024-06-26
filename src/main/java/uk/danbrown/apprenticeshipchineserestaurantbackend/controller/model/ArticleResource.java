@@ -1,10 +1,10 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Controller.Model;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model;
 
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 
 import java.time.LocalDate;
 
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.Domain.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 public record ArticleResource(String title, String content) {
 

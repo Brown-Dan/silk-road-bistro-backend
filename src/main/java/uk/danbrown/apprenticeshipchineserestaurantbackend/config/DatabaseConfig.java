@@ -1,4 +1,4 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Config;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;

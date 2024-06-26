@@ -1,10 +1,10 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Repository.Mapper;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper;
 
 import org.springframework.stereotype.Component;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.Domain.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 @Component
 public class ArticleMapper {

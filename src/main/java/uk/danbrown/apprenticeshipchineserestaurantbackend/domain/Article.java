@@ -1,4 +1,4 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Domain;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.domain;
 
 import java.time.LocalDate;
 

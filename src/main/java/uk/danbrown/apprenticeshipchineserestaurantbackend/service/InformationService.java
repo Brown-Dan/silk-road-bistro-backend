@@ -1,8 +1,8 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.Service;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.service;
 
 import org.springframework.stereotype.Service;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Domain.Article;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.Repository.InformationRepositoryOrchestrator;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.InformationRepositoryOrchestrator;
 
 import java.util.List;
 
