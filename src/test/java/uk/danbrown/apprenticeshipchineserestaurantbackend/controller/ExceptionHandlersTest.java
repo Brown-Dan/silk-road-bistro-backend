@@ -8,8 +8,6 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 
-import java.util.Collections;
-
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
