@@ -4,30 +4,30 @@ import org.springframework.stereotype.Service;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.ArticlesRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.HomepageRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArticlesService {
+public class HomepageService {
 
-    private final ArticlesRepository articlesRepository;
+    private final HomepageRepository homepageRepository;
 
-    public ArticlesService(ArticlesRepository articlesRepository) {
-        this.articlesRepository = articlesRepository;
+    public HomepageService(HomepageRepository homepageRepository) {
+        this.homepageRepository = homepageRepository;
     }
 
     public Article createArticle(Article article) throws FailureInsertingEntityException, EntityAlreadyExistsWithIdException {
-        Optional<Article> existingArticle = articlesRepository.getArticleByTitle(article.title());
+        Optional<Article> existingArticle = homepageRepository.getArticleByTitle(article.title());
 
         if (existingArticle.isPresent()) {
             throw new EntityAlreadyExistsWithIdException(article.title());
         }
-        return articlesRepository.createArticle(article);
+        return homepageRepository.createArticle(article);
     }
 
     public List<Article> getArticles(Integer limit) {
-        return articlesRepository.getArticles(limit);
+        return homepageRepository.getArticles(limit);
     }
 }

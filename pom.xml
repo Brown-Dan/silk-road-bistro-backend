@@ -175,7 +175,7 @@
                             <javaTimeTypes>true</javaTimeTypes>
                             <deprecated>false</deprecated>
                             <relations>true</relations>
-                            <records>true</records>
+                            <records>false</records>
                             <pojos>true</pojos>
                             <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
                             <fluentSetters>true</fluentSetters>

@@ -13,12 +13,12 @@ import java.util.Optional;
 import static uk.co.autotrader.generated.tables.Article.ARTICLE;
 
 @Repository
-public class ArticlesRepository {
+public class HomepageRepository {
 
     private final DSLContext db;
     private final ArticleEntityMapper articleEntityMapper;
 
-    public ArticlesRepository(DSLContext db, ArticleEntityMapper articleEntityMapper) {
+    public HomepageRepository(DSLContext db, ArticleEntityMapper articleEntityMapper) {
         this.db = db;
         this.articleEntityMapper = articleEntityMapper;
     }
