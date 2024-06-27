@@ -16,12 +16,4 @@ public class ArticleMapper {
                 .withDate(article.getDate())
                 .build();
     }
-
-    public ArticleEntity toEntity(Article article) {
-        return new ArticleEntity(
-                article.title(),
-                article.content(),
-                article.date()
-        );
-    }
 }

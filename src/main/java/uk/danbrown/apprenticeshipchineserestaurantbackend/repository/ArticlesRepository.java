@@ -29,7 +29,7 @@ public class ArticlesRepository {
     }
 
     public List<Article> getArticles(Integer limit) {
-        return db.selectFrom(ARTICLE).orderBy(ARTICLE.DATE).limit(limit).fetchInto(ArticleEntity.class).stream()
+        return db.selectFrom(ARTICLE).orderBy(ARTICLE.DATE.desc()).limit(limit).fetchInto(ArticleEntity.class).stream()
                 .map(articleMapper::toDomain)
                 .toList();
     }
