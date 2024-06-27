@@ -5,6 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.ArticleResourceMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
@@ -25,13 +26,16 @@ public class ArticlesControllerTest extends ControllerTestBase {
     @MockBean
     ArticlesService articlesService;
 
+    @MockBean
+    ArticleResourceMapper articleResourceMapper;
+
     @Test
     void getArticles_givenLimit_shouldReturnArticleResources() {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
                 .withDate(LocalDate.now()).build();
-        String expectedResponseBody = "[{\"title\":\"Title\",\"content\":\"Content\"}]";
+        String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
         Integer limit = 3;
 
         when(articlesService.getArticles(any())).thenReturn(singletonList(expectedArticle));
@@ -48,7 +52,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
                 .withTitle("Title")
                 .withContent("Content")
                 .withDate(LocalDate.now()).build();
-        String expectedResponseBody = "[{\"title\":\"Title\",\"content\":\"Content\"}]";
+        String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
 
         when(articlesService.getArticles(any())).thenReturn(singletonList(expectedArticle));
 

@@ -2,6 +2,7 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.cucumber;
 
 import io.cucumber.java.en.Then;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Articles;
 
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.utils.ResponseAssert.assertThat;
 
@@ -14,7 +15,7 @@ public class ResponseSteps {
     }
 
     @Then("a response is returned with status {int} and body")
-    public void aResponseIsReturnedWithStatusAndBody(int status, ArticleResource articleResource) {
+    public void aResponseIsReturnedWithStatusAndBody(int status, Articles articleResource) {
         assertThat(scenario.getLastResponse()).hasStatus(status).hasBody(articleResource);
     }
 }

@@ -4,12 +4,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.ArticleResourceMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Articles;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.service.ArticlesService;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +31,7 @@ public class ArticlesController {
     }
 
     @GetMapping()
-    public List<ArticleResource> getArticles(@RequestParam Optional<Integer> limit) {
-        return articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList();
+    public Articles getArticles(@RequestParam Optional<Integer> limit) {
+        return new Articles(articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList());
     }
 }

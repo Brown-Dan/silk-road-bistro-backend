@@ -6,7 +6,6 @@ import uk.co.autotrader.traverson.Traverson;
 import uk.co.autotrader.traverson.http.ApacheHttpTraversonClientAdapter;
 import uk.co.autotrader.traverson.http.Response;
 import uk.co.autotrader.traverson.http.TextBody;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
 
 public class TraversonClient {
 

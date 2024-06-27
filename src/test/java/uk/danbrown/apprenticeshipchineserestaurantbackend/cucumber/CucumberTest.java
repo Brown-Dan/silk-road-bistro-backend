@@ -1,8 +1,9 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.cucumber;
 
+import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.spring.CucumberContextConfiguration;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
@@ -33,8 +34,13 @@ public class CucumberTest {
         DATABASE_HELPER.clearTables();
     }
 
-    @AfterEach
+    @After
     public void tearDown() {
+        DATABASE_HELPER.clearTables();
+    }
+
+    @AfterAll
+    public static void afterAll() {
         DATABASE_HELPER.clearTables();
     }
 }

@@ -1,4 +1,4 @@
-Feature: Client can create articles and fetch articles
+Feature: Client can create and retrieve an article
 
   Scenario: Create an article
     Given a request is made to create an article with body
@@ -11,8 +11,12 @@ Feature: Client can create articles and fetch articles
     When a request is made to retrieve recent articles with limit 1
     Then a response is returned with status 200 and body
         """json
-        {
-          "title" : "Breaking news!",
-          "content" : "This is content"
-        }
+          {
+              "articles": [
+                  {
+                      "title": "Breaking news!",
+                      "content": "This is content"
+                  }
+              ]
+          }
     """
