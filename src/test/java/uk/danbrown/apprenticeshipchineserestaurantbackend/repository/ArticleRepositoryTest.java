@@ -76,14 +76,14 @@ public class ArticleRepositoryTest {
     }
 
     @Test
-    void createArticle_givenArticle_shouldInsertIntoDatabase() throws FailureInsertingEntityException {
+    void insertArticle_givenArticle_shouldInsertIntoDatabase() throws FailureInsertingEntityException {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
                 .withDate(LocalDate.of(2024, 6, 6))
                 .build();
 
-        Article result = articleRepository.createArticle(expectedArticle);
+        Article result = articleRepository.insertArticle(expectedArticle);
 
         assertThat(result).isEqualTo(expectedArticle);
     }

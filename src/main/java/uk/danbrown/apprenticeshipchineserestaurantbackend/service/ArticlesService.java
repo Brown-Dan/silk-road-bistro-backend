@@ -24,7 +24,7 @@ public class ArticlesService {
         if (existingArticle.isPresent()) {
             throw new EntityAlreadyExistsWithIdException(article.title());
         }
-        return articleRepository.createArticle(article);
+        return articleRepository.insertArticle(article);
     }
 
     public List<Article> getArticles(Integer limit) {

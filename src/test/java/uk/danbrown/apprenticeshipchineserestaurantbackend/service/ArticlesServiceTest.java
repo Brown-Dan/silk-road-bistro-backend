@@ -74,12 +74,12 @@ public class ArticlesServiceTest {
                 .withDate(LocalDate.now()).build();
 
         when(articleRepository.getArticleByTitle(any())).thenReturn(Optional.empty());
-        when(articleRepository.createArticle(any())).thenReturn(article);
+        when(articleRepository.insertArticle(any())).thenReturn(article);
 
         Article result = articlesService.createArticle(article);
 
         verify(articleRepository).getArticleByTitle(article.title());
-        verify(articleRepository).createArticle(article);
+        verify(articleRepository).insertArticle(article);
         assertThat(result).isEqualTo(article);
     }
 }

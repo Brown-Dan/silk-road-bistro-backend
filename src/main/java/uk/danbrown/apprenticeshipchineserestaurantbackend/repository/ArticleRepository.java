@@ -34,7 +34,7 @@ public class ArticleRepository {
                 .toList();
     }
 
-    public Article createArticle(Article article) throws FailureInsertingEntityException {
+    public Article insertArticle(Article article) throws FailureInsertingEntityException {
         ArticleEntity insertedArticle = db.insertInto(ARTICLE)
                 .set(ARTICLE.TITLE, article.title())
                 .set(ARTICLE.CONTENT, article.content())

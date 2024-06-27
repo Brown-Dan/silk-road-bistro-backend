@@ -1,0 +1,67 @@
+package uk.danbrown.apprenticeshipchineserestaurantbackend.domain;
+
+public record OpeningHours(
+        OpenCloseTime monday,
+        OpenCloseTime tuesday,
+        OpenCloseTime wednesday,
+        OpenCloseTime thursday,
+        OpenCloseTime friday,
+        OpenCloseTime saturday,
+        OpenCloseTime sunday
+) {
+    public static final class Builder {
+        private OpenCloseTime monday;
+        private OpenCloseTime tuesday;
+        private OpenCloseTime wednesday;
+        private OpenCloseTime thursday;
+        private OpenCloseTime friday;
+        private OpenCloseTime saturday;
+        private OpenCloseTime sunday;
+
+        private Builder() {
+        }
+
+        public static Builder anOpeningHours() {
+            return new Builder();
+        }
+
+        public Builder withMonday(OpenCloseTime monday) {
+            this.monday = monday;
+            return this;
+        }
+
+        public Builder withTuesday(OpenCloseTime tuesday) {
+            this.tuesday = tuesday;
+            return this;
+        }
+
+        public Builder withWednesday(OpenCloseTime wednesday) {
+            this.wednesday = wednesday;
+            return this;
+        }
+
+        public Builder withThursday(OpenCloseTime thursday) {
+            this.thursday = thursday;
+            return this;
+        }
+
+        public Builder withFriday(OpenCloseTime friday) {
+            this.friday = friday;
+            return this;
+        }
+
+        public Builder withSaturday(OpenCloseTime saturday) {
+            this.saturday = saturday;
+            return this;
+        }
+
+        public Builder withSunday(OpenCloseTime sunday) {
+            this.sunday = sunday;
+            return this;
+        }
+
+        public OpeningHours build() {
+            return new OpeningHours(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        }
+    }
+}
