@@ -18,15 +18,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 @JsonTest
-public class HomepageRepositoryTest {
+public class ArticleRepositoryTest {
 
     private static final DatabaseHelper dbHelper = new DatabaseHelper();
 
-    private HomepageRepository homepageRepository;
+    private ArticleRepository articleRepository;
 
     @BeforeEach
     void setUp() {
-        homepageRepository = new HomepageRepository(dbHelper.getDslContext(), new ArticleEntityMapper());
+        articleRepository = new ArticleRepository(dbHelper.getDslContext(), new ArticleEntityMapper());
     }
 
     @AfterEach
@@ -38,7 +38,7 @@ public class HomepageRepositoryTest {
     void getArticleByTitle_givenNonExistentTitle_shouldReturnEmptyOptional() {
         String title = "NonExisting";
 
-        Optional<Article> result = homepageRepository.getArticleByTitle(title);
+        Optional<Article> result = articleRepository.getArticleByTitle(title);
 
         assertThat(result).isEmpty();
     }
@@ -54,7 +54,7 @@ public class HomepageRepositoryTest {
                 .withDate(existingArticle.getDate())
                 .build();
 
-        Optional<Article> result = homepageRepository.getArticleByTitle(existingArticle.getTitle());
+        Optional<Article> result = articleRepository.getArticleByTitle(existingArticle.getTitle());
 
         assertThat(result).hasValue(expectedArticle);
     }
@@ -70,7 +70,7 @@ public class HomepageRepositoryTest {
                 .withDate(expectedArticleEntity.getDate())
                 .build();
 
-        List<Article> result = homepageRepository.getArticles(1);
+        List<Article> result = articleRepository.getArticles(1);
 
         assertThat(result).asList().containsExactly(expectedArticle);
     }
@@ -83,7 +83,7 @@ public class HomepageRepositoryTest {
                 .withDate(LocalDate.of(2024, 6, 6))
                 .build();
 
-        Article result = homepageRepository.createArticle(expectedArticle);
+        Article result = articleRepository.createArticle(expectedArticle);
 
         assertThat(result).isEqualTo(expectedArticle);
     }

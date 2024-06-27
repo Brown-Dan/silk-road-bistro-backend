@@ -8,30 +8,30 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Artic
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.HomepageService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.ArticlesService;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/articles")
-public class HomepageController {
+public class ArticlesController {
 
-    private final HomepageService homepageService;
+    private final ArticlesService articlesService;
     private final ArticleResourceMapper articleResourceMapper;
 
-    public HomepageController(HomepageService homepageService, ArticleResourceMapper articleResourceMapper) {
-        this.homepageService = homepageService;
+    public ArticlesController(ArticlesService articlesService, ArticleResourceMapper articleResourceMapper) {
+        this.articlesService = articlesService;
         this.articleResourceMapper = articleResourceMapper;
     }
 
     @PostMapping
     public ResponseEntity<ArticleResource> createArticle(@RequestBody ArticleResource articleResource) throws FailureInsertingEntityException, EntityAlreadyExistsWithIdException {
-        Article createdArticle = homepageService.createArticle(articleResourceMapper.toDomain(articleResource));
+        Article createdArticle = articlesService.createArticle(articleResourceMapper.toDomain(articleResource));
         return ResponseEntity.status(201).body(ArticleResource.fromDomain(createdArticle));
     }
 
     @GetMapping()
     public Articles getArticles(@RequestParam Optional<Integer> limit) {
-        return new Articles(homepageService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList());
+        return new Articles(articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList());
     }
 }

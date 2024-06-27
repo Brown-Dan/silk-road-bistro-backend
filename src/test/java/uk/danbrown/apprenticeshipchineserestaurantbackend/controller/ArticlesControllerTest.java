@@ -9,7 +9,7 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.Arti
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.HomepageService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.ArticlesService;
 
 import java.time.LocalDate;
 
@@ -20,11 +20,11 @@ import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.utils.MvcResultAssert.assertThat;
 
-@WebMvcTest(HomepageController.class)
-public class HomepageControllerTest extends ControllerTestBase {
+@WebMvcTest(ArticlesController.class)
+public class ArticlesControllerTest extends ControllerTestBase {
 
     @MockBean
-    HomepageService homepageService;
+    ArticlesService articlesService;
 
     @MockBean
     ArticleResourceMapper articleResourceMapper;
@@ -38,11 +38,11 @@ public class HomepageControllerTest extends ControllerTestBase {
         String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
         Integer limit = 3;
 
-        when(homepageService.getArticles(any())).thenReturn(singletonList(expectedArticle));
+        when(articlesService.getArticles(any())).thenReturn(singletonList(expectedArticle));
 
         MvcResult mvcResult = get("/articles?limit=%s".formatted(limit));
 
-        verify(homepageService).getArticles(limit);
+        verify(articlesService).getArticles(limit);
         assertThat(mvcResult).hasStatus(HttpStatus.OK).hasBody(expectedResponseBody);
     }
 
@@ -54,11 +54,11 @@ public class HomepageControllerTest extends ControllerTestBase {
                 .withDate(LocalDate.now()).build();
         String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
 
-        when(homepageService.getArticles(any())).thenReturn(singletonList(expectedArticle));
+        when(articlesService.getArticles(any())).thenReturn(singletonList(expectedArticle));
 
         MvcResult mvcResult = get("/articles");
 
-        verify(homepageService).getArticles(3);
+        verify(articlesService).getArticles(3);
         assertThat(mvcResult).hasStatus(HttpStatus.OK).hasBody(expectedResponseBody);
     }
 
@@ -70,7 +70,7 @@ public class HomepageControllerTest extends ControllerTestBase {
                 .withDate(LocalDate.now()).build();
         String expectedResponseBody = "{\"title\":\"Title\",\"content\":\"Content\"}";
 
-        when(homepageService.createArticle(any())).thenReturn(expectedArticle);
+        when(articlesService.createArticle(any())).thenReturn(expectedArticle);
 
         MvcResult mvcResult = post("/articles", expectedResponseBody);
 

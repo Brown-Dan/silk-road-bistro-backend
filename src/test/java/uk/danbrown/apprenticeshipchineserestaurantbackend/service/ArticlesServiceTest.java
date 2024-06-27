@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.HomepageRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.ArticleRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,16 +23,16 @@ import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 @ExtendWith(MockitoExtension.class)
-public class HomepageServiceTest {
+public class ArticlesServiceTest {
 
     @Mock
-    private HomepageRepository homepageRepository;
+    private ArticleRepository articleRepository;
 
-    private HomepageService homepageService;
+    private ArticlesService articlesService;
 
     @BeforeEach
     void setUp() {
-        homepageService = new HomepageService(homepageRepository);
+        articlesService = new ArticlesService(articleRepository);
     }
 
     @Test
@@ -43,11 +43,11 @@ public class HomepageServiceTest {
                 .withDate(LocalDate.now()).build();
         Integer limit = 3;
 
-        when(homepageRepository.getArticles(any())).thenReturn(singletonList(expectedArticle));
+        when(articleRepository.getArticles(any())).thenReturn(singletonList(expectedArticle));
 
-        List<Article> result = homepageService.getArticles(limit);
+        List<Article> result = articlesService.getArticles(limit);
 
-        verify(homepageRepository).getArticles(limit);
+        verify(articleRepository).getArticles(limit);
         assertThat(result).containsExactlyInAnyOrder(expectedArticle);
     }
 
@@ -58,12 +58,12 @@ public class HomepageServiceTest {
                 .withContent("Content")
                 .withDate(LocalDate.now()).build();
 
-        when(homepageRepository.getArticleByTitle(any())).thenReturn(Optional.of(article));
+        when(articleRepository.getArticleByTitle(any())).thenReturn(Optional.of(article));
 
 
-        assertThatThrownBy(() -> homepageService.createArticle(article)).isInstanceOf(EntityAlreadyExistsWithIdException.class)
+        assertThatThrownBy(() -> articlesService.createArticle(article)).isInstanceOf(EntityAlreadyExistsWithIdException.class)
                 .hasFieldOrPropertyWithValue("id", article.title());
-        verify(homepageRepository).getArticleByTitle(article.title());
+        verify(articleRepository).getArticleByTitle(article.title());
     }
 
     @Test
@@ -73,13 +73,13 @@ public class HomepageServiceTest {
                 .withContent("Content")
                 .withDate(LocalDate.now()).build();
 
-        when(homepageRepository.getArticleByTitle(any())).thenReturn(Optional.empty());
-        when(homepageRepository.createArticle(any())).thenReturn(article);
+        when(articleRepository.getArticleByTitle(any())).thenReturn(Optional.empty());
+        when(articleRepository.createArticle(any())).thenReturn(article);
 
-        Article result = homepageService.createArticle(article);
+        Article result = articlesService.createArticle(article);
 
-        verify(homepageRepository).getArticleByTitle(article.title());
-        verify(homepageRepository).createArticle(article);
+        verify(articleRepository).getArticleByTitle(article.title());
+        verify(articleRepository).createArticle(article);
         assertThat(result).isEqualTo(article);
     }
 }
