@@ -7,7 +7,7 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 @Component
-public class ArticleMapper {
+public class ArticleEntityMapper {
 
     public Article toDomain(ArticleEntity article) {
         return anArticle()

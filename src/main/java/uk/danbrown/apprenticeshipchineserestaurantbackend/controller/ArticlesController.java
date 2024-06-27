@@ -2,6 +2,7 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.ArticleResourceMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
@@ -16,14 +17,16 @@ import java.util.Optional;
 public class ArticlesController {
 
     private final ArticlesService articlesService;
+    private final ArticleResourceMapper articleResourceMapper;
 
-    public ArticlesController(ArticlesService articlesService) {
+    public ArticlesController(ArticlesService articlesService, ArticleResourceMapper articleResourceMapper) {
         this.articlesService = articlesService;
+        this.articleResourceMapper = articleResourceMapper;
     }
 
     @PostMapping
     public ResponseEntity<ArticleResource> createArticle(@RequestBody ArticleResource articleResource) throws FailureInsertingEntityException, EntityAlreadyExistsWithIdException {
-        Article createdArticle = articlesService.createArticle(articleResource.toDomain());
+        Article createdArticle = articlesService.createArticle(articleResourceMapper.toDomain(articleResource));
         return ResponseEntity.status(201).body(ArticleResource.fromDomain(createdArticle));
     }
 

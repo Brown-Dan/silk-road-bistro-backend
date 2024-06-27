@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleMapper;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.DatabaseHelper;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class ArticlesRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        articlesRepository = new ArticlesRepository(dbHelper.getDslContext(), new ArticleMapper());
+        articlesRepository = new ArticlesRepository(dbHelper.getDslContext(), new ArticleEntityMapper());
     }
 
     @AfterEach

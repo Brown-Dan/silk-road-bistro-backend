@@ -1,6 +1,5 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper;
 
-import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
@@ -11,22 +10,22 @@ import java.time.LocalDate;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
-public class ArticleMapperTest {
+public class ArticleEntityMapperTest {
 
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
     private static final LocalDate DATE = LocalDate.of(2024, 6, 27);
 
-    private ArticleMapper articleMapper;
+    private ArticleEntityMapper articleEntityMapper;
 
     @BeforeEach
     void setUp() {
-        articleMapper = new ArticleMapper();
+        articleEntityMapper = new ArticleEntityMapper();
     }
 
     @Test
     void toDomain_givenValidArticleEntity_shouldReturnArticle() {
-        Article result = articleMapper.toDomain(getArticleEntity());
+        Article result = articleEntityMapper.toDomain(getArticleEntity());
 
         assertThat(result).isEqualTo(getArticle());
     }

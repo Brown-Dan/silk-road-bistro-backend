@@ -66,12 +66,6 @@
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
@@ -103,6 +97,17 @@
             <artifactId>assertj-core</artifactId>
             <version>3.24.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.autotrader</groupId>
+            <artifactId>traverson4j-hc5</artifactId>
+            <version>4.3.0</version>
         </dependency>
     </dependencies>
 

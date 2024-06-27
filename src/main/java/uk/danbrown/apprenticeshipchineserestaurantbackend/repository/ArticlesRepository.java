@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleMapper;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,21 +16,21 @@ import static uk.co.autotrader.generated.tables.Article.ARTICLE;
 public class ArticlesRepository {
 
     private final DSLContext db;
-    private final ArticleMapper articleMapper;
+    private final ArticleEntityMapper articleEntityMapper;
 
-    public ArticlesRepository(DSLContext db, ArticleMapper articleMapper) {
+    public ArticlesRepository(DSLContext db, ArticleEntityMapper articleEntityMapper) {
         this.db = db;
-        this.articleMapper = articleMapper;
+        this.articleEntityMapper = articleEntityMapper;
     }
 
     public Optional<Article> getArticleByTitle(String title) {
         ArticleEntity article = db.selectFrom(ARTICLE).where(ARTICLE.TITLE.eq(title)).fetchOneInto(ArticleEntity.class);
-        return Optional.ofNullable(article).map(articleMapper::toDomain);
+        return Optional.ofNullable(article).map(articleEntityMapper::toDomain);
     }
 
     public List<Article> getArticles(Integer limit) {
         return db.selectFrom(ARTICLE).orderBy(ARTICLE.DATE.desc()).limit(limit).fetchInto(ArticleEntity.class).stream()
-                .map(articleMapper::toDomain)
+                .map(articleEntityMapper::toDomain)
                 .toList();
     }
 
@@ -41,7 +41,7 @@ public class ArticlesRepository {
                 .set(ARTICLE.DATE, article.date())
                 .returningResult().fetchOneInto(ArticleEntity.class);
 
-        return Optional.ofNullable(insertedArticle).map(articleMapper::toDomain)
+        return Optional.ofNullable(insertedArticle).map(articleEntityMapper::toDomain)
                 .orElseThrow(() -> new FailureInsertingEntityException(article));
     }
 }
