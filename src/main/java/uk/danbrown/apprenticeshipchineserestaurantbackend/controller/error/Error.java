@@ -3,8 +3,7 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorKey.ENTITY_ALREADY_EXISTS_WITH_ID;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorKey.FAILURE_INSERTING_ENTITY;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorKey.*;
 
 public record Error(ErrorKey key, String message) {
 
@@ -19,5 +18,9 @@ public record Error(ErrorKey key, String message) {
 
     public static Error entityAlreadyExistsWithId(String message) {
         return new Error(ENTITY_ALREADY_EXISTS_WITH_ID, message);
+    }
+
+    public static Error entityNotFound(String message) {
+        return new Error(ENTITY_NOT_FOUND, message);
     }
 }

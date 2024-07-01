@@ -1,62 +1,48 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.web.servlet.MvcResult;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.OpeningHoursMapper;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.DatabaseHelper;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.OpeningHoursService;
 
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.utils.MvcResultAssert.assertThat;
 
-@JsonTest
-public class OpeningHoursRepositoryTest {
+@WebMvcTest(OpeningHoursController.class)
+public class OpeningHoursControllerTest extends ControllerTestBase {
 
-    private static final DatabaseHelper dbHelper = new DatabaseHelper();
-
-    @Autowired
-    private ObjectMapper objectMapper;
-    private OpeningHoursRepository openingHoursRepository;
-
-    @BeforeEach
-    void setUp() {
-        openingHoursRepository = new OpeningHoursRepository(dbHelper.getDslContext(), new OpeningHoursMapper(objectMapper));
-    }
-
-    @AfterEach
-    void tearDown() {
-        dbHelper.clearTables();
-    }
-
-    @Test
-    void insertOpeningHours_givenOpeningHours_shouldInsertIntoDatabase() {
-        OpeningHours result = openingHoursRepository.insertOpeningHours(getOpeningHours());
-
-        assertThat(result).isEqualTo(getOpeningHours());
-    }
+    @MockBean
+    private OpeningHoursService openingHoursService;
 
     @Test
     void getOpeningHours_givenOpeningHoursExist_shouldReturnOpeningHours() {
-        dbHelper.insertOpeningHoursJson(getOpeningHoursJson());
+        when(openingHoursService.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
 
-        Optional<OpeningHours> result = openingHoursRepository.getOpeningHours();
+        MvcResult mvcResult = get("/opening-hours");
 
-        assertThat(result).hasValue(getOpeningHours());
+        verify(openingHoursService).getOpeningHours();
+
+        assertThat(mvcResult).hasStatus(HttpStatus.OK).hasBody(getOpeningHoursJson());
     }
 
     @Test
-    void getOpeningHours_givenOpeningHoursDoNotExist_shouldReturnEmptyOptional() {
-        Optional<OpeningHours> result = openingHoursRepository.getOpeningHours();
+    void getOpeningHours_givenOpeningHoursDoNotExist_shouldReturn404() {
+        when(openingHoursService.getOpeningHours()).thenReturn(Optional.empty());
 
-        assertThat(result).isEmpty();
+        MvcResult mvcResult = get("/opening-hours");
+
+        verify(openingHoursService).getOpeningHours();
+
+        assertThat(mvcResult).hasStatus(HttpStatus.NOT_FOUND).hasBody("{\"errors\":[{\"key\":\"ENTITY_NOT_FOUND\",\"message\":\"Opening Hours Not Found\"}]}");
     }
 
     private OpeningHours getOpeningHours() {
@@ -75,4 +61,3 @@ public class OpeningHoursRepositoryTest {
         return "{\"monday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"tuesday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"wednesday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"thursday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"friday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"saturday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":false},\"sunday\":{\"openingTime\":\"07:00:00\",\"closingTime\":\"19:00:00\",\"closed\":true}}";
     }
 }
-
