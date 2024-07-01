@@ -1,49 +1,39 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import uk.co.autotrader.generated.tables.pojos.OpenCloseTimeEntity;
-import uk.co.autotrader.generated.tables.pojos.OpeningHoursEntity;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
-
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
 
 @Component
 public class OpeningHoursMapper {
 
-    public OpeningHours toDomain(OpeningHoursEntity openingHoursEntity) {
-        return anOpeningHours()
-                .withMonday(mapOpenCloseTimeToDomain(openingHoursEntity.getMonday()))
-                .withTuesday(mapOpenCloseTimeToDomain(openingHoursEntity.getTuesday()))
-                .withWednesday(mapOpenCloseTimeToDomain(openingHoursEntity.getWednesday()))
-                .withThursday(mapOpenCloseTimeToDomain(openingHoursEntity.getThursday()))
-                .withFriday(mapOpenCloseTimeToDomain(openingHoursEntity.getFriday()))
-                .withSaturday(mapOpenCloseTimeToDomain(openingHoursEntity.getSaturday()))
-                .withSunday(mapOpenCloseTimeToDomain(openingHoursEntity.getSunday()))
-                .build();
+    private static final Logger LOG = LoggerFactory.getLogger(OpeningHoursRepository.class);
+
+    private final ObjectMapper objectMapper;
+
+    public OpeningHoursMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
-    public OpeningHoursEntity toEntity(OpeningHours openingHours) {
-        return new OpeningHoursEntity(
-                mapOpenCloseTimeToEntity(openingHours.monday()),
-                mapOpenCloseTimeToEntity(openingHours.tuesday()),
-                mapOpenCloseTimeToEntity(openingHours.wednesday()),
-                mapOpenCloseTimeToEntity(openingHours.thursday()),
-                mapOpenCloseTimeToEntity(openingHours.friday()),
-                mapOpenCloseTimeToEntity(openingHours.saturday()),
-                mapOpenCloseTimeToEntity(openingHours.sunday())
-        );
+    public OpeningHours toDomain(String openingHours) {
+        try {
+            return objectMapper.readValue(openingHours, OpeningHours.class);
+        } catch (JsonProcessingException e) {
+            LOG.error("Failed to map opening hours - {}", openingHours);
+            return null;
+        }
     }
 
-    private OpenCloseTimeEntity mapOpenCloseTimeToEntity(OpenCloseTime openCloseTime) {
-        return new OpenCloseTimeEntity(openCloseTime.openingTime(),
-                openCloseTime.closingTime(),
-                openCloseTime.closed());
-    }
-
-    private OpenCloseTime mapOpenCloseTimeToDomain(OpenCloseTimeEntity openCloseTimeEntity) {
-        return new OpenCloseTime(openCloseTimeEntity.getOpeningTime(),
-                openCloseTimeEntity.getClosingTime(),
-                openCloseTimeEntity.getClosed());
+    public String toJsonString(OpeningHours openingHours) {
+        try {
+            return objectMapper.writeValueAsString(openingHours);
+        } catch (JsonProcessingException e) {
+            LOG.error("Failed to map opening hours - {}", openingHours);
+            return null;
+        }
     }
 }
