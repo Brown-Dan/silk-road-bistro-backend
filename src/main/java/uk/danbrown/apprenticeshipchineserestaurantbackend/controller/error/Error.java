@@ -23,4 +23,8 @@ public record Error(ErrorKey key, String message) {
     public static Error entityNotFound(String message) {
         return new Error(ENTITY_NOT_FOUND, message);
     }
+
+    public static Error invalidRequestBody(String message) {
+        return new Error(INVALID_REQUEST_BODY, message);
+    }
 }

@@ -8,9 +8,9 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
 
 import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExceptionHandlersTest {
@@ -52,11 +52,24 @@ public class ExceptionHandlersTest {
     void handleEntityNotFound_givenException_shouldReturnResponseEntity() {
         EntityNotFoundException exception = new EntityNotFoundException("Not found");
 
-        ResponseEntity<ErrorResponse> expectedResult =ResponseEntity
+        ResponseEntity<ErrorResponse> expectedResult = ResponseEntity
                 .status(404)
                 .body(new ErrorResponse(singletonList(Error.entityNotFound("Not found"))));
 
         ResponseEntity<ErrorResponse> result = exceptionHandlers.handleEntityNotFound(exception);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void handleInvalidRequestBody_givenException_shouldReturnResponseEntity() {
+        InvalidRequestBodyException exception = new InvalidRequestBodyException("Invalid");
+
+        ResponseEntity<ErrorResponse> expectedResult = ResponseEntity
+                .status(400)
+                .body(new ErrorResponse(singletonList(Error.invalidRequestBody("Invalid"))));
+
+        ResponseEntity<ErrorResponse> result = exceptionHandlers.handleInvalidRequestBody(exception);
 
         assertThat(result).isEqualTo(expectedResult);
     }

@@ -1,6 +1,6 @@
 Feature: Client can create and retrieve an article
 
-  Scenario: Create an article
+  Scenario: Create and retrieve an article
     Given a request is made to create an article with body
     """json
         {
@@ -9,7 +9,7 @@ Feature: Client can create and retrieve an article
         }
     """
     When a request is made to retrieve recent articles with limit 1
-    Then a response is returned with status 200 and body
+    Then a response is returned with status 200 and articles
         """json
           {
               "articles": [

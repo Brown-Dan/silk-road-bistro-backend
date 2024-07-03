@@ -2,9 +2,10 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.service.OpeningHoursService;
 
 import java.util.Optional;
@@ -28,8 +29,34 @@ public class OpeningHoursController {
     }
 
     @PostMapping
-    public ResponseEntity<OpeningHours> createOpeningHours(@RequestBody OpeningHours openingHours) {
-        // todo should we validate here or on the frontend?
-        return ResponseEntity.ok(openingHoursService.insertOpeningHours(openingHours));
+    public ResponseEntity<OpeningHours> createOpeningHours(@RequestBody OpeningHours openingHours) throws InvalidRequestBodyException {
+        validateOpeningHours(openingHours);
+        return ResponseEntity.status(201).body(openingHoursService.insertOpeningHours(openingHours));
+    }
+
+    private void validateOpeningHours(OpeningHours openingHours) throws InvalidRequestBodyException {
+        validateOpenCloseTime(openingHours.monday());
+        validateOpenCloseTime(openingHours.tuesday());
+        validateOpenCloseTime(openingHours.wednesday());
+        validateOpenCloseTime(openingHours.thursday());
+        validateOpenCloseTime(openingHours.friday());
+        validateOpenCloseTime(openingHours.saturday());
+        validateOpenCloseTime(openingHours.sunday());
+    }
+
+    private void validateOpenCloseTime(OpenCloseTime openCloseTime) throws InvalidRequestBodyException {
+        if (openCloseTime.openingTime() != null && openCloseTime.closingTime() == null ||
+            openCloseTime.closingTime() != null && openCloseTime.openingTime() == null) {
+            throw new InvalidRequestBodyException("'openingTime' and 'closingTime' must both be provided.");
+        }
+        if (openCloseTime.closed() && (openCloseTime.openingTime() != null)) {
+            throw new InvalidRequestBodyException("'closed' must not be true if 'openingTime' and 'closingTime' are provided.");
+        }
+        if (!openCloseTime.closed() && (openCloseTime.openingTime() == null)) {
+            throw new InvalidRequestBodyException("Either 'closed' must be true or 'openingTime' and 'closingTime' must be provided.");
+        }
+        if (!openCloseTime.closed() && openCloseTime.openingTime().isAfter(openCloseTime.closingTime())) {
+            throw new InvalidRequestBodyException("'openingTime' must take place before 'closingTime'.");
+        }
     }
 }

@@ -1,5 +1,7 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.domain;
 
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+
 public record OpeningHours(
         OpenCloseTime monday,
         OpenCloseTime tuesday,
@@ -63,5 +65,16 @@ public record OpeningHours(
         public OpeningHours build() {
             return new OpeningHours(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
         }
+    }
+
+    public OpeningHours.Builder cloneBuilder() {
+        return anOpeningHours()
+                .withMonday(monday)
+                .withMonday(tuesday)
+                .withMonday(wednesday)
+                .withMonday(thursday)
+                .withMonday(friday)
+                .withMonday(saturday)
+                .withMonday(saturday);
     }
 }

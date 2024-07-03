@@ -23,4 +23,13 @@ public class RequestSteps {
         scenario.setLastResponse(traversonClient.getArticles(limit));
     }
 
+    @Given("a request is made to create opening hours with body")
+    public void aRequestIsMadeToCreateOpeningHoursWithBody(String openingHours) {
+        scenario.setLastResponse(traversonClient.createOpeningHours(openingHours));
+    }
+
+    @When("a request is made to retrieve opening hours")
+    public void aRequestIsMadeToRetrieveOpeningHours() {
+        scenario.setLastResponse(traversonClient.getOpeningHours());
+    }
 }
