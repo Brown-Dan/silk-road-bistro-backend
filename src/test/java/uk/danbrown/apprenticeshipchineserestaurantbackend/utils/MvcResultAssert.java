@@ -1,6 +1,7 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,8 @@ import static org.assertj.core.api.Fail.fail;
 
 public class MvcResultAssert extends AbstractAssert<MvcResultAssert, MvcResult> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule());
 
     protected MvcResultAssert(MvcResult actual) {
         super(actual, MvcResultAssert.class);
