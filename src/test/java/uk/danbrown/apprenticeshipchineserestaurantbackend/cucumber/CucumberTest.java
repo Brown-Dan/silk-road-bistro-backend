@@ -14,7 +14,6 @@ import static io.cucumber.junit.platform.engine.Constants.PARALLEL_EXECUTION_ENA
 
 @Suite
 @SelectClasspathResource("features")
-@ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 @CucumberContextConfiguration
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
