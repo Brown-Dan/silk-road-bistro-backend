@@ -10,6 +10,7 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.service.HomepageService;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class HomepageControllerTest extends ControllerTestBase {
     HomepageService homepageService;
 
     @Test
-    void getHomepage_shouldReturnHomepage() {
+    void getHomepage_shouldReturnHomepage() throws EntityNotFoundException {
         when(homepageService.getHomepage()).thenReturn(getHomepage());
 
         MvcResult mvcResult = get("/homepage");

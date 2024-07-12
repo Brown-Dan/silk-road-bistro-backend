@@ -10,6 +10,8 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.HomepageRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,6 +35,8 @@ public class HomepageServiceTest {
     @Mock
     private OpeningHoursService openingHoursService;
 
+    @Mock
+    private HomepageRepository homepageRepository;
 
     private HomepageService homepageService;
 
@@ -40,12 +44,14 @@ public class HomepageServiceTest {
     void setUp() {
         homepageService = new HomepageService(
                 openingHoursService,
-                articlesService
+                articlesService,
+                homepageRepository
         );
     }
 
     @Test
-    void getHomepage_shouldReturnHomepage() {
+    void getHomepage_shouldReturnHomepage() throws EntityNotFoundException {
+        when(homepageRepository.getHomepage()).thenReturn(getEmptyHomepage());
         when(articlesService.getArticles(any())).thenReturn(singletonList(getArticle()));
         when(openingHoursService.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
 
@@ -81,6 +87,11 @@ public class HomepageServiceTest {
                 .withTitle("title")
                 .withContent("content")
                 .withDate(LocalDate.now())
+                .build();
+    }
+
+    private Homepage getEmptyHomepage() {
+        return aHomepage()
                 .build();
     }
 }
