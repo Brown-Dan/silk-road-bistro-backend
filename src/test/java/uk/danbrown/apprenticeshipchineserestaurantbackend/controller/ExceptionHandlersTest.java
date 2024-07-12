@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorResponse;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.*;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,6 +67,19 @@ public class ExceptionHandlersTest {
                 .body(new ErrorResponse(singletonList(Error.invalidRequestBody("Invalid"))));
 
         ResponseEntity<ErrorResponse> result = exceptionHandlers.handleInvalidRequestBody(exception);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void handleInvalidRequestId_givenException_shouldReturnResponseEntity() {
+        InvalidRequestIdException exception = new InvalidRequestIdException("123");
+
+        ResponseEntity<ErrorResponse> expectedResult = ResponseEntity
+                .status(400)
+                .body(new ErrorResponse(singletonList(Error.invalidRequestId("Invalid request id - 123"))));
+
+        ResponseEntity<ErrorResponse> result = exceptionHandlers.handleInvalidRequestId(exception);
 
         assertThat(result).isEqualTo(expectedResult);
     }

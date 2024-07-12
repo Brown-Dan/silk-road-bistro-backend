@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import uk.co.autotrader.traverson.http.Response;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorResponse;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.*;
 
 import java.util.Collections;
 
@@ -36,6 +33,11 @@ public class ExceptionHandlers {
     @ExceptionHandler(InvalidRequestBodyException.class)
     public ResponseEntity<ErrorResponse> handleInvalidRequestBody(InvalidRequestBodyException exception) {
         return buildResponseEntity(invalidRequestBody(exception.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidRequestIdException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidRequestId(InvalidRequestIdException exception) {
+        return buildResponseEntity(invalidRequestId("Invalid request id - %s".formatted(exception.getId())));
     }
 
     private static ResponseEntity<ErrorResponse> buildResponseEntity(Error error) {

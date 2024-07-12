@@ -2,7 +2,7 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.exception;
 
 public class EntityNotFoundException extends Exception {
 
-    private String message;
+    private final String message;
 
     public EntityNotFoundException(String message) {
         this.message = message;

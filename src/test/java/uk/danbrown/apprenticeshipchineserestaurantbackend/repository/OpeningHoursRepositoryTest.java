@@ -4,10 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.OpeningHoursMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.DatabaseHelper;
 
@@ -15,12 +21,17 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
 
 @JsonTest
+@ExtendWith(MockitoExtension.class)
 public class OpeningHoursRepositoryTest {
 
     private static final DatabaseHelper dbHelper = new DatabaseHelper();
+
+    @MockBean
+    private RequestContextManager requestContextManager;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -28,7 +39,8 @@ public class OpeningHoursRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        openingHoursRepository = new OpeningHoursRepository(dbHelper.getDslContext(), new OpeningHoursMapper(objectMapper));
+        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("123"));
+        openingHoursRepository = new OpeningHoursRepository(dbHelper.getDslContext(), new OpeningHoursMapper(objectMapper), requestContextManager);
     }
 
     @AfterEach
@@ -37,7 +49,7 @@ public class OpeningHoursRepositoryTest {
     }
 
     @Test
-    void insertOpeningHours_givenOpeningHours_shouldInsertIntoDatabase() {
+    void insertOpeningHours_givenOpeningHours_shouldInsertIntoDatabase() throws FailureInsertingEntityException {
         OpeningHours result = openingHoursRepository.insertOpeningHours(getOpeningHours());
 
         assertThat(result).isEqualTo(getOpeningHours());
@@ -45,7 +57,7 @@ public class OpeningHoursRepositoryTest {
 
     @Test
     void getOpeningHours_givenOpeningHoursExist_shouldReturnOpeningHours() {
-        dbHelper.insertOpeningHoursJson(getOpeningHoursJson());
+        dbHelper.insertOpeningHoursJson(getOpeningHoursJson(), "123");
 
         Optional<OpeningHours> result = openingHoursRepository.getOpeningHours();
 

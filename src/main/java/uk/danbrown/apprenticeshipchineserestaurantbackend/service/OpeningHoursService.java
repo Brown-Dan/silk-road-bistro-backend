@@ -2,6 +2,7 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.service;
 
 import org.springframework.stereotype.Service;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
 
 import java.util.Optional;
@@ -15,7 +16,7 @@ public class OpeningHoursService {
         this.openingHoursRepository = openingHoursRepository;
     }
 
-    public OpeningHours insertOpeningHours(OpeningHours openingHours) {
+    public OpeningHours insertOpeningHours(OpeningHours openingHours) throws FailureInsertingEntityException {
         return openingHoursRepository.insertOpeningHours(openingHours);
     }
 

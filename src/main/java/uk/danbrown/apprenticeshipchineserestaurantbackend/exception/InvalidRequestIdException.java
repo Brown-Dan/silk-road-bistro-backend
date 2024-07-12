@@ -1,10 +1,10 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.exception;
 
-public class EntityAlreadyExistsWithIdException extends Exception {
+public class InvalidRequestIdException extends Exception {
 
     private final String id;
 
-    public EntityAlreadyExistsWithIdException(String id) {
+    public InvalidRequestIdException(String id) {
         this.id = id;
     }
 
@@ -12,4 +12,3 @@ public class EntityAlreadyExistsWithIdException extends Exception {
         return id;
     }
 }
-

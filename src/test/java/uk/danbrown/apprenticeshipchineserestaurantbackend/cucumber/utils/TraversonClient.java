@@ -12,18 +12,26 @@ public class TraversonClient {
     private final Traverson traverson = new Traverson(new ApacheHttpTraversonClientAdapter(HttpClientBuilder.create().build()));
 
     public Response<JSONObject> getArticles(Integer limit) {
-        return traverson.from("http://localhost:8080/articles?limit=" + limit).get();
+        return traverson.from("http://localhost:8080/articles?limit=" + limit)
+                .withHeader("id", "123")
+                .get();
     }
 
     public Response<JSONObject> createArticle(String articleResource) {
-        return traverson.from("http://localhost:8080/articles").post(new TextBody(articleResource, "application/json"));
+        return traverson.from("http://localhost:8080/articles")
+                .withHeader("id", "123")
+                .post(new TextBody(articleResource, "application/json"));
     }
 
     public Response<JSONObject> getOpeningHours() {
-        return traverson.from("http://localhost:8080/opening-hours").get();
+        return traverson.from("http://localhost:8080/opening-hours")
+                .withHeader("id", "123")
+                .get();
     }
 
     public Response<JSONObject> createOpeningHours(String openingHours) {
-        return traverson.from("http://localhost:8080/opening-hours").post(new TextBody(openingHours, "application/json"));
+        return traverson.from("http://localhost:8080/opening-hours")
+                .withHeader("id", "123")
+                .post(new TextBody(openingHours, "application/json"));
     }
 }

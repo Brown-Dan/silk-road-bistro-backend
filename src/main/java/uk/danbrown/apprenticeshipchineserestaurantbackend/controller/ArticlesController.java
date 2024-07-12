@@ -30,7 +30,7 @@ public class ArticlesController {
         return ResponseEntity.status(201).body(ArticleResource.fromDomain(createdArticle));
     }
 
-    @GetMapping()
+    @GetMapping
     public Articles getArticles(@RequestParam Optional<Integer> limit) {
         return new Articles(articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList());
     }

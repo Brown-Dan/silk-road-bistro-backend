@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
 
 import java.time.LocalTime;
@@ -33,7 +34,7 @@ public class OpeningHoursServiceTest {
     }
 
     @Test
-    void insertOpeningHours_givenOpeningHours_shouldCallOpeningHoursRepository() {
+    void insertOpeningHours_givenOpeningHours_shouldCallOpeningHoursRepository() throws FailureInsertingEntityException {
         when(openingHoursRepository.insertOpeningHours(any())).thenReturn(getOpeningHours());
 
         OpeningHours result = openingHoursService.insertOpeningHours(getOpeningHours());

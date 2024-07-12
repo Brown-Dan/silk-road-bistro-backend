@@ -3,8 +3,13 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
@@ -15,18 +20,24 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
 
 @JsonTest
+@ExtendWith(MockitoExtension.class)
 public class ArticleRepositoryTest {
 
     private static final DatabaseHelper dbHelper = new DatabaseHelper();
 
     private ArticleRepository articleRepository;
 
+    @MockBean
+    private RequestContextManager requestContextManager;
+
     @BeforeEach
     void setUp() {
-        articleRepository = new ArticleRepository(dbHelper.getDslContext(), new ArticleEntityMapper());
+        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("123"));
+        articleRepository = new ArticleRepository(dbHelper.getDslContext(), new ArticleEntityMapper(), requestContextManager);
     }
 
     @AfterEach
@@ -90,6 +101,7 @@ public class ArticleRepositoryTest {
 
     private ArticleEntity getArticle1() {
         ArticleEntity article = new ArticleEntity();
+        article.setHomepageId("123");
         article.setTitle("Title1");
         article.setContent("Title1");
         article.setDate(LocalDate.of(2024, 6, 6));
@@ -98,6 +110,7 @@ public class ArticleRepositoryTest {
 
     private ArticleEntity getArticle2() {
         ArticleEntity article = new ArticleEntity();
+        article.setHomepageId("123");
         article.setTitle("Title2");
         article.setContent("Title2");
         article.setDate(LocalDate.of(2023, 7, 7));

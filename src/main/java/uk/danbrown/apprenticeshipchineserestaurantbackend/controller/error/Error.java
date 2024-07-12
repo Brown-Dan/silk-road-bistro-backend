@@ -27,4 +27,8 @@ public record Error(ErrorKey key, String message) {
     public static Error invalidRequestBody(String message) {
         return new Error(INVALID_REQUEST_BODY, message);
     }
+
+    public static Error invalidRequestId(String message) {
+        return new Error(INVALID_REQUEST_ID, message);
+    }
 }

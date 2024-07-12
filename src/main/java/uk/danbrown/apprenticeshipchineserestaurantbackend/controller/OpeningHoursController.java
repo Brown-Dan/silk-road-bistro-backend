@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.service.OpeningHoursService;
 
@@ -29,7 +30,7 @@ public class OpeningHoursController {
     }
 
     @PostMapping
-    public ResponseEntity<OpeningHours> createOpeningHours(@RequestBody OpeningHours openingHours) throws InvalidRequestBodyException {
+    public ResponseEntity<OpeningHours> createOpeningHours(@RequestBody OpeningHours openingHours) throws InvalidRequestBodyException, FailureInsertingEntityException {
         validateOpeningHours(openingHours);
         return ResponseEntity.status(201).body(openingHoursService.insertOpeningHours(openingHours));
     }

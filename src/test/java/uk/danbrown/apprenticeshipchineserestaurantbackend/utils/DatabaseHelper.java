@@ -3,6 +3,8 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.utils;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import uk.co.autotrader.generated.tables.Homepage;
+import uk.co.autotrader.generated.tables.Offer;
 import uk.co.autotrader.generated.tables.OpeningHours;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
 
@@ -11,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static uk.co.autotrader.generated.tables.Article.ARTICLE;
+import static uk.co.autotrader.generated.tables.Homepage.HOMEPAGE;
+import static uk.co.autotrader.generated.tables.Offer.OFFER;
 import static uk.co.autotrader.generated.tables.OpeningHours.OPENING_HOURS;
 
 public class DatabaseHelper {
@@ -33,10 +37,13 @@ public class DatabaseHelper {
     public void clearTables() {
         db.deleteFrom(ARTICLE).execute();
         db.deleteFrom(OPENING_HOURS).execute();
+        db.deleteFrom(OFFER).execute();
+        db.deleteFrom(HOMEPAGE).execute();
     }
 
-    public void insertOpeningHoursJson(String openingHours) {
+    public void insertOpeningHoursJson(String openingHours, String homepageId) {
         db.insertInto(OPENING_HOURS)
+                .set(OPENING_HOURS.ID, homepageId)
                 .set(OPENING_HOURS.OPENING_HOURS_, openingHours)
                 .execute();
     }
@@ -44,6 +51,7 @@ public class DatabaseHelper {
     public void insertArticle(ArticleEntity... articles) {
         for (ArticleEntity article : articles) {
             db.insertInto(ARTICLE)
+                    .set(ARTICLE.HOMEPAGE_ID, article.getHomepageId())
                     .set(ARTICLE.TITLE, article.getTitle())
                     .set(ARTICLE.CONTENT, article.getContent())
                     .set(ARTICLE.DATE, article.getDate())

@@ -3,6 +3,8 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
@@ -17,25 +19,30 @@ public class ArticleRepository {
 
     private final DSLContext db;
     private final ArticleEntityMapper articleEntityMapper;
+    private final RequestContextManager requestContextManager;
 
-    public ArticleRepository(DSLContext db, ArticleEntityMapper articleEntityMapper) {
+    public ArticleRepository(DSLContext db, ArticleEntityMapper articleEntityMapper, RequestContextManager requestContextManager) {
         this.db = db;
         this.articleEntityMapper = articleEntityMapper;
+        this.requestContextManager = requestContextManager;
     }
 
     public Optional<Article> getArticleByTitle(String title) {
-        ArticleEntity article = db.selectFrom(ARTICLE).where(ARTICLE.TITLE.eq(title)).fetchOneInto(ArticleEntity.class);
+        ArticleEntity article = db.selectFrom(ARTICLE).where(ARTICLE.TITLE.eq(title)
+                .and(ARTICLE.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId()))).fetchOneInto(ArticleEntity.class);
         return Optional.ofNullable(article).map(articleEntityMapper::toDomain);
     }
 
     public List<Article> getArticles(Integer limit) {
-        return db.selectFrom(ARTICLE).orderBy(ARTICLE.DATE.desc()).limit(limit).fetchInto(ArticleEntity.class).stream()
+        return db.selectFrom(ARTICLE).where(ARTICLE.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId()))
+                .orderBy(ARTICLE.DATE.desc()).limit(limit).fetchInto(ArticleEntity.class).stream()
                 .map(articleEntityMapper::toDomain)
                 .toList();
     }
 
     public Article insertArticle(Article article) throws FailureInsertingEntityException {
         ArticleEntity insertedArticle = db.insertInto(ARTICLE)
+                .set(ARTICLE.HOMEPAGE_ID, requestContextManager.getRequestContext().currentId())
                 .set(ARTICLE.TITLE, article.title())
                 .set(ARTICLE.CONTENT, article.content())
                 .set(ARTICLE.DATE, article.date())
