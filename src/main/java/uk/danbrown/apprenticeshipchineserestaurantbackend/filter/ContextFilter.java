@@ -9,9 +9,10 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestIdException;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Component
-@Order(1)
+@Order(2)
 public class ContextFilter implements Filter {
 
     private final RequestContextManager requestContextManager;

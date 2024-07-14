@@ -6,15 +6,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.*;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.HomepageRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.HomepageRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.ArticlesService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.HomepageService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.OfferService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.OpeningHoursService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
@@ -22,9 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Builder.aHomepage;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage.Builder.aHomepage;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 @ExtendWith(MockitoExtension.class)
 public class HomepageServiceTest {
@@ -38,6 +40,9 @@ public class HomepageServiceTest {
     @Mock
     private HomepageRepository homepageRepository;
 
+    @Mock
+    private OfferService offerService;
+
     private HomepageService homepageService;
 
     @BeforeEach
@@ -45,7 +50,8 @@ public class HomepageServiceTest {
         homepageService = new HomepageService(
                 openingHoursService,
                 articlesService,
-                homepageRepository
+                homepageRepository,
+                offerService
         );
     }
 
@@ -54,10 +60,12 @@ public class HomepageServiceTest {
         when(homepageRepository.getHomepage()).thenReturn(getEmptyHomepage());
         when(articlesService.getArticles(any())).thenReturn(singletonList(getArticle()));
         when(openingHoursService.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
+        when(offerService.getOffers(any())).thenReturn(getOffers());
 
         Homepage result = homepageService.getHomepage();
 
         verify(articlesService).getArticles(3);
+        verify(offerService).getOffers(3);
 
         assertThat(result).isEqualTo(getHomepage());
 
@@ -93,5 +101,9 @@ public class HomepageServiceTest {
     private Homepage getEmptyHomepage() {
         return aHomepage()
                 .build();
+    }
+
+    private List<Offer> getOffers() {
+        return singletonList(new Offer("title", "content", true));
     }
 }

@@ -10,8 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.ArticleRepository;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.DatabaseHelper;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
 
 @JsonTest
 @ExtendWith(MockitoExtension.class)

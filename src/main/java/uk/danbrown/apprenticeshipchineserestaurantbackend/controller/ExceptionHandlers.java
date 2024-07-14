@@ -40,6 +40,11 @@ public class ExceptionHandlers {
         return buildResponseEntity(invalidRequestId("Invalid request id - %s".formatted(exception.getId())));
     }
 
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPassword() {
+        return buildResponseEntity(invalidPassword());
+    }
+
     private static ResponseEntity<ErrorResponse> buildResponseEntity(Error error) {
         return ResponseEntity.status(error.getHttpStatus()).body(new ErrorResponse(Collections.singletonList(error)));
     }

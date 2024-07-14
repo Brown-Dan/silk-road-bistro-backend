@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.LoggerAssert;
 
 import java.time.LocalTime;
@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 @JsonTest
 public class OpeningHoursMapperTest {

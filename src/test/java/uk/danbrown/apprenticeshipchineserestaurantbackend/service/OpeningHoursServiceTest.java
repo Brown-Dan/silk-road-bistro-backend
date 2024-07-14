@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.OpeningHoursRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.OpeningHoursService;
 
 import java.time.LocalTime;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 @ExtendWith(MockitoExtension.class)
 public class OpeningHoursServiceTest {

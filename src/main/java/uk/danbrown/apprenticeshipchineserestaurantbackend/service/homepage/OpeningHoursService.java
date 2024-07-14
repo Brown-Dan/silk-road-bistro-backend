@@ -1,9 +1,9 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.service;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage;
 
 import org.springframework.stereotype.Service;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.OpeningHoursRepository;
 
 import java.util.Optional;
 

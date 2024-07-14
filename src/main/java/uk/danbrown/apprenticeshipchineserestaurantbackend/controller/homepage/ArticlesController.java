@@ -1,14 +1,14 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.ArticleResourceMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Articles;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.ArticlesService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.ArticlesService;
 
 import java.util.Optional;
 

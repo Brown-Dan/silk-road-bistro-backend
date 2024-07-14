@@ -5,22 +5,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage.HomepageController;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.HomepageService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.HomepageService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.when;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Builder.aHomepage;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage.Builder.aHomepage;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.utils.MvcResultAssert.assertThat;
 
 @WebMvcTest(HomepageController.class)

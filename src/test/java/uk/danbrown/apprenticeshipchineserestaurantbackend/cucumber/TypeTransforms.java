@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.DocStringType;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Articles;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 
 public class TypeTransforms {
 

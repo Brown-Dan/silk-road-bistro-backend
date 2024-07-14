@@ -2,16 +2,15 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ArticleResource;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
 
 public class ArticleResourceMapperTest {
 

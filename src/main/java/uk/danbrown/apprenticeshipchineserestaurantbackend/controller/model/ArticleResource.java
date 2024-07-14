@@ -1,6 +1,6 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model;
 
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 
 public record ArticleResource(String title, String content) {
 

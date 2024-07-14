@@ -1,6 +1,6 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.domain;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
 
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 public record OpeningHours(
         OpenCloseTime monday,

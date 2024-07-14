@@ -1,18 +1,18 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import uk.co.autotrader.generated.tables.pojos.HomepageEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Location;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Location;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 import static uk.co.autotrader.generated.tables.Homepage.HOMEPAGE;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Builder.aHomepage;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage.Builder.aHomepage;
 
 @Repository
 public class HomepageRepository {

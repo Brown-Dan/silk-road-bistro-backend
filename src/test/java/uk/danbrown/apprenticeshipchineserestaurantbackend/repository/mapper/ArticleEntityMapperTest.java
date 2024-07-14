@@ -3,12 +3,12 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article.Builder.anArticle;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
 
 public class ArticleEntityMapperTest {
 

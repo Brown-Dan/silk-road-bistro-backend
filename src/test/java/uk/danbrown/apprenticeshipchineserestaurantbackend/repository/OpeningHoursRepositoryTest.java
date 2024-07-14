@@ -11,9 +11,10 @@ import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.OpeningHoursRepository;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.OpeningHoursMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.utils.DatabaseHelper;
 
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours.Builder.anOpeningHours;
+import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 @JsonTest
 @ExtendWith(MockitoExtension.class)

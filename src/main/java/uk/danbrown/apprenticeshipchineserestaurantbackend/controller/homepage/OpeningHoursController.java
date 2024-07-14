@@ -1,13 +1,13 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpenCloseTime;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidRequestBodyException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.OpeningHoursService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.OpeningHoursService;
 
 import java.util.Optional;
 

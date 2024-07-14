@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.OpeningHours;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.OpeningHoursRepository;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.OpeningHoursRepository;
 
 @Component
 public class OpeningHoursMapper {

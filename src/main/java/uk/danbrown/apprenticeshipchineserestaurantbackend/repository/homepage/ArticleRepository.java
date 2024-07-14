@@ -1,11 +1,10 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContext;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Article;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.mapper.ArticleEntityMapper;
 
