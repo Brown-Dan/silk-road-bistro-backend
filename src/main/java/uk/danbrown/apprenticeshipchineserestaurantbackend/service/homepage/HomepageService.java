@@ -2,8 +2,12 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage;
 
 import org.springframework.stereotype.Service;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.HomepageRepository;
+
+import java.util.List;
 
 @Service
 public class HomepageService {
@@ -24,9 +28,21 @@ public class HomepageService {
         Homepage homepage = homepageRepository.getHomepage();
 
         return homepage.cloneBuilder()
-                .withArticles(articlesService.getArticles(3))
-                .withOpeningHours(openingHoursService.getOpeningHours().orElse(null))
+                .withArticles(articlesService.getArticles(3).reversed())
+                .withOpeningHours(openingHoursService.getOpeningHours())
                 .withOffers(offerService.getOffers(3))
                 .build();
+    }
+
+    public String updateBiography(String biography) throws FailureInsertingEntityException {
+        return homepageRepository.updateBiography(biography);
+    }
+
+    public List<String> updateImages(List<String> images) throws FailureInsertingEntityException {
+        return homepageRepository.updateImages(images);
+    }
+
+    public void deleteImage(String imageUrl) throws FailureInsertingEntityException, EntityNotFoundException {
+        homepageRepository.deleteImage(imageUrl);
     }
 }

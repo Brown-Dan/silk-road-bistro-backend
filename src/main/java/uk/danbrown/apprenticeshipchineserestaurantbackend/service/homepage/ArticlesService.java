@@ -30,4 +30,8 @@ public class ArticlesService {
     public List<Article> getArticles(Integer limit) {
         return articleRepository.getArticles(limit);
     }
+
+    public void deleteArticle(String articleTitle) {
+        articleRepository.deleteArticle(articleTitle);
+    }
 }

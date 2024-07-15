@@ -1,5 +1,7 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage;
 
+import java.time.LocalTime;
+
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours.Builder.anOpeningHours;
 
 public record OpeningHours(
@@ -10,7 +12,24 @@ public record OpeningHours(
         OpenCloseTime friday,
         OpenCloseTime saturday,
         OpenCloseTime sunday
-) {
+)
+{
+    public static OpeningHours getDefault() {
+        return new OpeningHours(
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime(),
+                getDefaultOpenCloseTime()
+        );
+    }
+
+    public static OpenCloseTime getDefaultOpenCloseTime() {
+        return new OpenCloseTime(LocalTime.of(0, 0), LocalTime.of(0, 0), false);
+    }
+
     public static final class Builder {
         private OpenCloseTime monday;
         private OpenCloseTime tuesday;

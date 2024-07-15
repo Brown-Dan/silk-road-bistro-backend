@@ -20,7 +20,7 @@ public class OpeningHoursService {
         return openingHoursRepository.insertOpeningHours(openingHours);
     }
 
-    public Optional<OpeningHours> getOpeningHours() {
-        return openingHoursRepository.getOpeningHours();
+    public OpeningHours getOpeningHours() {
+        return openingHoursRepository.getOpeningHours().orElse(OpeningHours.getDefault());
     }
 }

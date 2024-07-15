@@ -32,6 +32,12 @@ public class ArticlesController {
 
     @GetMapping
     public Articles getArticles(@RequestParam Optional<Integer> limit) {
-        return new Articles(articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList());
+        return new Articles(articlesService.getArticles(limit.orElse(3)).stream().map(ArticleResource::fromDomain).toList().reversed());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteArticle(@RequestParam String delete) {
+        articlesService.deleteArticle(delete);
+        return ResponseEntity.status(204).build();
     }
 }

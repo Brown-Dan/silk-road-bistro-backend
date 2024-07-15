@@ -50,4 +50,11 @@ public class ArticleRepository {
         return Optional.ofNullable(insertedArticle).map(articleEntityMapper::toDomain)
                 .orElseThrow(() -> new FailureInsertingEntityException(article));
     }
+
+    public void deleteArticle(String articleTitle) {
+        db.deleteFrom(ARTICLE)
+                .where(ARTICLE.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId())
+                        .and(ARTICLE.TITLE.eq(articleTitle)))
+                .execute();
+    }
 }
