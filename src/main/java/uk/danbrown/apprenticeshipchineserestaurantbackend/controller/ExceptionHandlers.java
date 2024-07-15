@@ -3,7 +3,6 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import uk.co.autotrader.traverson.http.Response;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.ErrorResponse;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.*;

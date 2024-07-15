@@ -29,8 +29,8 @@ public record Error(ErrorKey key, String message) {
         return new Error(INVALID_REQUEST_BODY, message);
     }
 
-    public static Error invalidRequestId(String message) {
-        return new Error(INVALID_REQUEST_ID, message);
+    public static Error invalidRequestId(String id) {
+        return new Error(INVALID_REQUEST_ID, "Provided request id is invalid - '%s'".formatted(id));
     }
 
     public static Error jwtVerificationException(JWTVerificationException jwtVerificationException) {
@@ -39,5 +39,9 @@ public record Error(ErrorKey key, String message) {
 
     public static Error invalidPassword() {
         return new Error(INVALID_PASSWORD, "Provided password does not match existing password.");
+    }
+
+    public static Error unknownError() {
+        return new Error(UNKNOWN_ERROR, "Something went wrong - please try again later.");
     }
 }

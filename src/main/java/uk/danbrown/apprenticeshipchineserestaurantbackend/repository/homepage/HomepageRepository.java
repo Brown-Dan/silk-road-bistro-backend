@@ -9,6 +9,7 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Locati
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static uk.co.autotrader.generated.tables.Homepage.HOMEPAGE;
@@ -38,7 +39,8 @@ public class HomepageRepository {
         return aHomepage()
                 .withBiography(homepageEntity.getBiography())
                 .withLocation(new Location(homepageEntity.getAddress()))
-                .withImages(Arrays.stream(homepageEntity.getImages()).toList())
+                .withImages(Optional.ofNullable(homepageEntity.getImages()).map(images -> Arrays.stream(images).toList())
+                        .orElse(List.of()))
                 .build();
     }
 }

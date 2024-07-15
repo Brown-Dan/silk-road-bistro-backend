@@ -83,4 +83,15 @@ public class ExceptionHandlersTest {
 
         assertThat(result).isEqualTo(expectedResult);
     }
+
+    @Test
+    void handleInvalidPassword_givenException_shouldReturnResponseEntity() {
+        ResponseEntity<ErrorResponse> expectedResult = ResponseEntity
+                .status(401)
+                .body(new ErrorResponse(singletonList(Error.invalidPassword())));
+
+        ResponseEntity<ErrorResponse> result = exceptionHandlers.handleInvalidPassword();
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
 }

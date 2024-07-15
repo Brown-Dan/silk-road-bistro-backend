@@ -9,6 +9,7 @@ public enum ErrorKey {
     INVALID_REQUEST_ID(HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED),
     INVALID_JWT(HttpStatus.UNAUTHORIZED),
+    UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR),
     ENTITY_ALREADY_EXISTS_WITH_ID(HttpStatus.CONFLICT);
 
     private final HttpStatus httpStatus;

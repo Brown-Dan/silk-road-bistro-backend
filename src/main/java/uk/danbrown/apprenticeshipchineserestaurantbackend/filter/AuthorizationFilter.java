@@ -12,6 +12,7 @@ import org.apache.hc.core5.http.ContentType;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.error.Error;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final JWTVerifier jwtVerifier;
     private final ObjectMapper objectMapper;
+    private final RequestContextManager requestContextManager;
 
     private static final Set<String> PROTECTED_PATHS = Set.of(
       "/articles",
@@ -31,9 +33,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
      "/opening-hour"
     );
 
-    public AuthorizationFilter(JWTVerifier jwtVerifier, ObjectMapper objectMapper) {
+    public AuthorizationFilter(JWTVerifier jwtVerifier, ObjectMapper objectMapper, RequestContextManager requestContextManager) {
         this.jwtVerifier = jwtVerifier;
         this.objectMapper = objectMapper;
+        this.requestContextManager = requestContextManager;
     }
 
     @Override
@@ -49,8 +52,15 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 response.getWriter().write(objectMapper.writeValueAsString(Error.jwtVerificationException(exception)));
                 response.getWriter().close();
             }
-        } else {
-            filterChain.doFilter(request, response);
         }
+        String id = request.getHeader("id");
+        if (id == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+            response.getWriter().write(objectMapper.writeValueAsString(Error.invalidRequestId(null)));
+            response.getWriter().close();
+        }
+        requestContextManager.set(id);
+        filterChain.doFilter(request, response);
     }
 }
