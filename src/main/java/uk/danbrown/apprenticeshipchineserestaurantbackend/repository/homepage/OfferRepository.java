@@ -5,13 +5,15 @@ import org.springframework.stereotype.Repository;
 import uk.co.autotrader.generated.tables.pojos.OfferEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Offer;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static uk.co.autotrader.generated.tables.Article.ARTICLE;
+import static org.jooq.impl.DSL.trueCondition;
 import static uk.co.autotrader.generated.tables.Offer.OFFER;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Offer.Builder.anOffer;
 
@@ -26,12 +28,26 @@ public class OfferRepository {
         this.requestContextManager = requestContextManager;
     }
 
-    public List<Offer> getOffers(Integer limit) {
+    public List<Offer> getOffers(Integer limit, boolean includeDisabled) {
         return db.selectFrom(OFFER)
-                .where(OFFER.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId()))
+                .where(OFFER.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId())
+                        .and(!includeDisabled ? OFFER.ENABLED.eq(true) : trueCondition()))
                 .limit(limit).fetchInto(OfferEntity.class).stream()
                 .map(this::toDomain)
-                .toList();
+                .collect(Collectors.toList());
+    }
+
+    public void toggleOffer(String offerTitle) throws EntityNotFoundException {
+        db.update(OFFER)
+                .set(OFFER.ENABLED,
+                        !db.selectFrom(OFFER)
+                                .where(OFFER.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId())
+                                        .and(OFFER.TITLE.eq(offerTitle)))
+                                .fetchOptionalInto(OfferEntity.class).orElseThrow(() -> new EntityNotFoundException(offerTitle)).getEnabled()
+                )
+                .where(OFFER.HOMEPAGE_ID.eq(requestContextManager.getRequestContext().currentId())
+                        .and(OFFER.TITLE.eq(offerTitle)))
+                .execute();
     }
 
     public Offer insertOffer(Offer offer) throws FailureInsertingEntityException {

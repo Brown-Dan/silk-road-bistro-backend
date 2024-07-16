@@ -2,7 +2,6 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage;
 
 import org.springframework.stereotype.Service;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.repository.homepage.HomepageRepository;
@@ -30,7 +29,7 @@ public class HomepageService {
         return homepage.cloneBuilder()
                 .withArticles(articlesService.getArticles(3).reversed())
                 .withOpeningHours(openingHoursService.getOpeningHours())
-                .withOffers(offerService.getOffers(3))
+                .withOffers(offerService.getOffers(3, false))
                 .build();
     }
 

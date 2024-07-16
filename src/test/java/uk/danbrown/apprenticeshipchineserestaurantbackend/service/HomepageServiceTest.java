@@ -17,7 +17,6 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.Openi
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,13 +58,13 @@ public class HomepageServiceTest {
     void getHomepage_shouldReturnHomepage() throws EntityNotFoundException {
         when(homepageRepository.getHomepage()).thenReturn(getEmptyHomepage());
         when(articlesService.getArticles(any())).thenReturn(singletonList(getArticle()));
-        when(openingHoursService.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
-        when(offerService.getOffers(any())).thenReturn(getOffers());
+        when(openingHoursService.getOpeningHours()).thenReturn(getOpeningHours());
+        when(offerService.getOffers(any(), any())).thenReturn(getOffers());
 
         Homepage result = homepageService.getHomepage();
 
         verify(articlesService).getArticles(3);
-        verify(offerService).getOffers(3);
+        verify(offerService).getOffers(3, true);
 
         assertThat(result).isEqualTo(getHomepage());
 
@@ -104,6 +103,6 @@ public class HomepageServiceTest {
     }
 
     private List<Offer> getOffers() {
-        return singletonList(new Offer("title", "content", true));
+        return singletonList(new Offer("title", "content", true, 10.0, 50, "OFFERCODE"));
     }
 }
