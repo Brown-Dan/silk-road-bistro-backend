@@ -37,7 +37,7 @@ public class ArticleRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("123"));
+        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("test"));
         articleRepository = new ArticleRepository(dbHelper.getDslContext(), new ArticleEntityMapper(), requestContextManager);
     }
 
@@ -102,7 +102,7 @@ public class ArticleRepositoryTest {
 
     private ArticleEntity getArticle1() {
         ArticleEntity article = new ArticleEntity();
-        article.setHomepageId("123");
+        article.setHomepageId("test");
         article.setTitle("Title1");
         article.setContent("Title1");
         article.setDate(LocalDate.of(2024, 6, 6));
@@ -111,7 +111,7 @@ public class ArticleRepositoryTest {
 
     private ArticleEntity getArticle2() {
         ArticleEntity article = new ArticleEntity();
-        article.setHomepageId("123");
+        article.setHomepageId("test");
         article.setTitle("Title2");
         article.setContent("Title2");
         article.setDate(LocalDate.of(2023, 7, 7));

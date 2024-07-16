@@ -40,7 +40,7 @@ public class OpeningHoursRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("123"));
+        when(requestContextManager.getRequestContext()).thenReturn(new RequestContext("test"));
         openingHoursRepository = new OpeningHoursRepository(dbHelper.getDslContext(), new OpeningHoursMapper(objectMapper), requestContextManager);
     }
 
@@ -58,7 +58,7 @@ public class OpeningHoursRepositoryTest {
 
     @Test
     void getOpeningHours_givenOpeningHoursExist_shouldReturnOpeningHours() {
-        dbHelper.insertOpeningHoursJson(getOpeningHoursJson(), "123");
+        dbHelper.insertOpeningHoursJson(getOpeningHoursJson(), "test");
 
         Optional<OpeningHours> result = openingHoursRepository.getOpeningHours();
 

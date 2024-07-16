@@ -1,4 +1,4 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model;
 
-public record Jwt(String jwt) {
+public record JwtResource(String jwt) {
 }

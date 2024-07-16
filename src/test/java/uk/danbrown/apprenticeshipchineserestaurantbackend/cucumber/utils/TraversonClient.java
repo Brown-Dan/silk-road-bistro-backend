@@ -13,25 +13,25 @@ public class TraversonClient {
 
     public Response<JSONObject> getArticles(Integer limit) {
         return traverson.from("http://localhost:8080/articles?limit=" + limit)
-                .withHeader("id", "123")
+                .withHeader("id", "test")
                 .get();
     }
 
     public Response<JSONObject> createArticle(String articleResource) {
         return traverson.from("http://localhost:8080/articles")
-                .withHeader("id", "123")
+                .withHeader("id", "test")
                 .post(new TextBody(articleResource, "application/json"));
     }
 
     public Response<JSONObject> getOpeningHours() {
         return traverson.from("http://localhost:8080/opening-hours")
-                .withHeader("id", "123")
+                .withHeader("id", "test")
                 .get();
     }
 
     public Response<JSONObject> createOpeningHours(String openingHours) {
         return traverson.from("http://localhost:8080/opening-hours")
-                .withHeader("id", "123")
+                .withHeader("id", "test")
                 .post(new TextBody(openingHours, "application/json"));
     }
 }

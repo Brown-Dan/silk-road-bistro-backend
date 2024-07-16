@@ -31,7 +31,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
     ArticleResourceMapper articleResourceMapper;
 
     @Test
-    void getArticles_givenLimit_shouldReturnArticleResources() {
+    void getArticles_givenLimit_shouldReturnArticles() {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
@@ -48,7 +48,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
     }
 
     @Test
-    void getArticles_givenNoLimit_shouldDefaultToThreeAndReturnArticleResources() {
+    void getArticles_givenNoLimit_shouldDefaultToThreeAndReturnArticles() {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
@@ -72,6 +72,21 @@ public class ArticlesControllerTest extends ControllerTestBase {
         String expectedResponseBody = "{\"title\":\"Title\",\"content\":\"Content\"}";
 
         when(articlesService.createArticle(any())).thenReturn(expectedArticle);
+
+        MvcResult mvcResult = post("/articles", expectedResponseBody);
+
+        assertThat(mvcResult).hasStatus(HttpStatus.CREATED).hasBody(expectedResponseBody);
+    }
+
+    @Test
+    void createArticle_givenFailureToInsertArticle_shouldReturn500() throws EntityAlreadyExistsWithIdException, FailureInsertingEntityException {
+        Article expectedArticle = anArticle()
+                .withTitle("Title")
+                .withContent("Content")
+                .withDate(LocalDate.now()).build();
+        String expectedResponseBody = "{\"title\":\"Title\",\"content\":\"Content\"}";
+
+        when(articlesService.createArticle(any())).thenThrow(new FailureInsertingEntityException(expectedArticle));
 
         MvcResult mvcResult = post("/articles", expectedResponseBody);
 

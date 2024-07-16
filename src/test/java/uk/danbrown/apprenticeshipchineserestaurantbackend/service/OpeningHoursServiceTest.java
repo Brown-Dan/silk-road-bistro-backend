@@ -48,18 +48,18 @@ public class OpeningHoursServiceTest {
     void getOpeningHours_givenOpeningHoursExist_shouldReturnOptionalOpeningHours() {
         when(openingHoursRepository.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
 
-        Optional<OpeningHours> result = openingHoursService.getOpeningHours();
+        OpeningHours result = openingHoursService.getOpeningHours();
 
-        assertThat(result).hasValue(getOpeningHours());
+        assertThat(result).isEqualTo(getOpeningHours());
     }
 
     @Test
     void getOpeningHours_givenOpeningHoursDoNotExist_shouldReturnOptionalOpeningHours() {
         when(openingHoursRepository.getOpeningHours()).thenReturn(Optional.empty());
 
-        Optional<OpeningHours> result = openingHoursService.getOpeningHours();
+        OpeningHours result = openingHoursService.getOpeningHours();
 
-        assertThat(result).isEmpty();
+        assertThat(result).isEqualTo(OpeningHours.getDefault());
     }
 
     private OpeningHours getOpeningHours() {

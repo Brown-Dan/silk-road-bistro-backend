@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.BiographyResource;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.ImagesResource;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Homepage;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Location;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.service.homepage.HomepageService;
@@ -24,13 +25,18 @@ public class HomepageController {
         return ResponseEntity.ok(homepageService.getHomepage());
     }
 
+    @PostMapping("/address")
+    public ResponseEntity<Location> updateAddress(@RequestBody Location address) throws FailureInsertingEntityException {
+        return ResponseEntity.ok(homepageService.updateAddress(address));
+    }
+
     @PostMapping("/biography")
-    public ResponseEntity<BiographyResource> createBiography(@RequestBody BiographyResource biography) throws FailureInsertingEntityException {
+    public ResponseEntity<BiographyResource> updateBiography(@RequestBody BiographyResource biography) throws FailureInsertingEntityException {
         return ResponseEntity.ok(new BiographyResource(homepageService.updateBiography(biography.biography())));
     }
 
     @PostMapping("/images")
-    public ResponseEntity<ImagesResource> createImages(@RequestBody ImagesResource images) throws FailureInsertingEntityException {
+    public ResponseEntity<ImagesResource> updateImages(@RequestBody ImagesResource images) throws FailureInsertingEntityException {
         return ResponseEntity.ok(new ImagesResource(homepageService.updateImages(images.images())));
     }
 

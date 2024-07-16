@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.Jwt;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.JwtResource;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.LoginRequest;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.OrganizationAccount;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
@@ -25,12 +25,12 @@ public class OrganizationAuthorizationController {
     }
 
     @PostMapping("/create-account")
-    public ResponseEntity<Jwt> createAccount(@RequestBody OrganizationAccount organizationAccount) throws EntityAlreadyExistsWithIdException, FailureInsertingEntityException {
-        return ResponseEntity.status(201).body(new Jwt(organizationAuthorizationService.createAccount(organizationAccount)));
+    public ResponseEntity<JwtResource> createAccount(@RequestBody OrganizationAccount organizationAccount) throws EntityAlreadyExistsWithIdException, FailureInsertingEntityException {
+        return ResponseEntity.status(201).body(new JwtResource(organizationAuthorizationService.createAccount(organizationAccount)));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Jwt> login(@RequestBody LoginRequest loginRequest) throws InvalidPasswordException, EntityNotFoundException {
-        return ResponseEntity.ok(new Jwt(organizationAuthorizationService.login(loginRequest)));
+    public ResponseEntity<JwtResource> login(@RequestBody LoginRequest loginRequest) throws InvalidPasswordException, EntityNotFoundException {
+        return ResponseEntity.ok(new JwtResource(organizationAuthorizationService.login(loginRequest)));
     }
 }

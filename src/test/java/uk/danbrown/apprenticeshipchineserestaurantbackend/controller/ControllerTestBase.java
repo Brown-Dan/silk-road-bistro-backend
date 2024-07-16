@@ -1,8 +1,10 @@
 package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
 
+import com.auth0.jwt.JWTVerifier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,7 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 
 import static org.assertj.core.api.Fail.fail;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest
 public class ControllerTestBase {
@@ -27,9 +30,18 @@ public class ControllerTestBase {
     @MockBean
     RequestContextManager requestContextManager;
 
+    @MockBean
+    JWTVerifier jwtVerifier;
+
+    @BeforeEach
+    void setUp() {
+        when(jwtVerifier.verify(anyString())).thenReturn(null);
+    }
+
     public MvcResult get(String url) {
         try {
-            return mockMvc.perform(MockMvcRequestBuilders.get(url).header("id" , "123")
+            return mockMvc.perform(MockMvcRequestBuilders.get(url)
+                            .header("id", "test")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andReturn();
         } catch (Exception e) {
@@ -40,7 +52,8 @@ public class ControllerTestBase {
 
     public MvcResult delete(String url) {
         try {
-            return mockMvc.perform(MockMvcRequestBuilders.delete(url).header("id" , "123")
+            return mockMvc.perform(MockMvcRequestBuilders.delete(url)
+                            .header("id", "test")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andReturn();
         } catch (Exception e) {
@@ -50,7 +63,8 @@ public class ControllerTestBase {
 
     public MvcResult patch(String url, String patchJson) {
         try {
-            return mockMvc.perform(MockMvcRequestBuilders.patch(url).header("id" , "123")
+            return mockMvc.perform(MockMvcRequestBuilders.patch(url)
+                            .header("id", "test")
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .content(patchJson))
                     .andReturn();
@@ -62,7 +76,8 @@ public class ControllerTestBase {
 
     public MvcResult post(String url, String body) {
         try {
-            return mockMvc.perform(MockMvcRequestBuilders.post(url).header("id" , "123")
+            return mockMvc.perform(MockMvcRequestBuilders.post(url)
+                            .header("id", "test")
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .content(body))
                     .andReturn();
