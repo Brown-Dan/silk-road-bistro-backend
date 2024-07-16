@@ -33,24 +33,13 @@ public class OpeningHoursControllerTest extends ControllerTestBase {
 
     @Test
     void getOpeningHours_givenOpeningHoursExist_shouldReturnOpeningHours() {
-        when(openingHoursService.getOpeningHours()).thenReturn(Optional.of(getOpeningHours()));
+        when(openingHoursService.getOpeningHours()).thenReturn(getOpeningHours());
 
         MvcResult mvcResult = get("/opening-hours");
 
         verify(openingHoursService).getOpeningHours();
 
         assertThat(mvcResult).hasStatus(HttpStatus.OK).hasBody(getOpeningHoursJson());
-    }
-
-    @Test
-    void getOpeningHours_givenOpeningHoursDoNotExist_shouldReturn404() {
-        when(openingHoursService.getOpeningHours()).thenReturn(Optional.empty());
-
-        MvcResult mvcResult = get("/opening-hours");
-
-        verify(openingHoursService).getOpeningHours();
-
-        assertThat(mvcResult).hasStatus(HttpStatus.NOT_FOUND).hasBody("{\"errors\":[{\"key\":\"ENTITY_NOT_FOUND\",\"message\":\"Opening Hours Not Found\"}]}");
     }
 
     @Test

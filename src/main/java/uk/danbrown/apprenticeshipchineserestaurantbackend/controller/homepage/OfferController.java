@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/offer")
+@RequestMapping("/offers")
 public class OfferController {
 
     private final OfferService offerService;
@@ -19,8 +19,9 @@ public class OfferController {
         this.offerService = offerService;
     }
 
+    @GetMapping
     public ResponseEntity<List<Offer>> getOffers(@RequestParam Optional<Integer> limit) {
-        return ResponseEntity.ok(offerService.getOffers(limit.orElse(3)));
+        return ResponseEntity.ok(offerService.getOffers(limit.orElse(20)));
     }
 
     @PostMapping
