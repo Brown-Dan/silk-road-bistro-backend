@@ -2,7 +2,6 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.repository;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-import uk.co.autotrader.generated.tables.Messages;
 import uk.co.autotrader.generated.tables.pojos.MessagesEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.context.RequestContextManager;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Message;
@@ -33,7 +32,7 @@ public class MessageRepository {
         Optional<MessagesEntity> insertedMessage =
                 db.insertInto(MESSAGES)
                         .set(MESSAGES.ORGANIZATION_ID, requestContextManager.getRequestContext().currentId())
-                        .set(MESSAGES.NAME, message.name())
+                        .set(MESSAGES.NAME, message.summary())
                         .set(MESSAGES.CONTENT, message.content())
                         .set(MESSAGES.EMAIL, message.email())
                         .set(MESSAGES.PHONE_NUMBER, message.phoneNumber())
@@ -54,7 +53,7 @@ public class MessageRepository {
 
     private Message mapMessageEntityToMessage(MessagesEntity messagesEntity) {
         return aMessage()
-                .withName(messagesEntity.getName())
+                .withSummary(messagesEntity.getName())
                 .withContent(messagesEntity.getContent())
                 .withEmail(messagesEntity.getEmail())
                 .withPhoneNumber(messagesEntity.getPhoneNumber())

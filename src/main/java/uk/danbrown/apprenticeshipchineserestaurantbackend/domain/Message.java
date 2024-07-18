@@ -2,10 +2,10 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.domain;
 
 import java.time.LocalDateTime;
 
-public record Message(String name, String email, String phoneNumber, String content, LocalDateTime time) {
+public record Message(String summary, String email, String phoneNumber, String content, LocalDateTime time) {
 
     public static final class Builder {
-        private String name;
+        private String summary;
         private String email;
         private String phoneNumber;
         private String content;
@@ -18,8 +18,8 @@ public record Message(String name, String email, String phoneNumber, String cont
             return new Builder();
         }
 
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withSummary(String summary) {
+            this.summary = summary;
             return this;
         }
 
@@ -44,7 +44,7 @@ public record Message(String name, String email, String phoneNumber, String cont
         }
 
         public Message build() {
-            return new Message(name, email, phoneNumber, content, time);
+            return new Message(summary, email, phoneNumber, content, time);
         }
     }
 }

@@ -29,8 +29,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private static final Set<String> PROTECTED_PATHS = Set.of(
       "/articles",
-      "/offer",
-     "/opening-hour"
+      "/offers",
+     "/opening-hours"
     );
 
     public AuthorizationFilter(JWTVerifier jwtVerifier, ObjectMapper objectMapper, RequestContextManager requestContextManager) {
