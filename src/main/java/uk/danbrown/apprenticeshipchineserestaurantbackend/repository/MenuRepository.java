@@ -28,6 +28,15 @@ public class MenuRepository {
         this.menuItemEntitiesToMenuMapper = menuItemEntitiesToMenuMapper;
     }
 
+    public MenuItem getMenuItemById(String itemName) {
+        Optional<MenuItemEntity> menuItemEntity = db.selectFrom(MENU_ITEM)
+                .where(MENU_ITEM.ITEM_NAME.eq(itemName))
+                .fetchOptionalInto(MenuItemEntity.class);
+
+        return menuItemEntity.map(menuItemEntitiesToMenuMapper::mapMenuItemEntityToMenuItem)
+                .orElse(null);
+    }
+
     public Menu getMenu() {
         List<MenuItemEntity> entities = db.selectFrom(MENU_ITEM)
                 .where(MENU_ITEM.ORGANIZATION_ID.eq(requestContextManager.getRequestContext().currentId()))
