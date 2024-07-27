@@ -11,7 +11,7 @@ import uk.danbrown.apprenticeshipchineserestaurantbackend.service.OrdersService;
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/orders")
 public class OrdersController {
 
     private final OrdersService ordersService;

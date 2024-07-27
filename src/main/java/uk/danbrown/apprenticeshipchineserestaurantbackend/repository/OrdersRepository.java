@@ -46,7 +46,7 @@ public class OrdersRepository {
 
     public Order getOrdersByUserId(String userId) {
         Optional<TakeawayOrderEntity> takeawayOrderEntity = db.selectFrom(TAKEAWAY_ORDER)
-                .where(TAKEAWAY_ORDER.USER_ID.eq(userId))
+                .where(TAKEAWAY_ORDER.USER_ID.eq(userId).and(TAKEAWAY_ORDER.ORGANIZATION_ID.eq(requestContextManager.getRequestContext().currentId())))
                 .fetchOptionalInto(TakeawayOrderEntity.class);
 
         return takeawayOrderEntity.map(this::mapOrderEntityToOrder).orElse(null);
