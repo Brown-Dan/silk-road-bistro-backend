@@ -39,6 +39,7 @@ public class OrdersRepository {
                 .set(TAKEAWAY_ORDER.ITEM_NAME, order.items().stream().map(MenuItem::name).toArray(String[]::new))
                 .set(TAKEAWAY_ORDER.USER_ID, order.username())
                 .set(TAKEAWAY_ORDER.ADDRESS, mapLocationToString(order.address()))
+                .set(TAKEAWAY_ORDER.DELIVERED, order.delivered())
                 .returningResult().fetchOptionalInto(TakeawayOrderEntity.class);
 
         return takeawayOrderEntity.map(this::mapOrderEntityToOrder).orElseThrow(() -> new FailureInsertingEntityException(order));

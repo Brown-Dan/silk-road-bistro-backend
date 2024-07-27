@@ -33,4 +33,6 @@ public class UserAccountController {
     public ResponseEntity<JwtResource> login(@RequestBody UserLoginRequest loginRequest) throws InvalidPasswordException, EntityNotFoundException {
         return ResponseEntity.ok(new JwtResource(userAccountService.login(loginRequest)));
     }
+
+
 }

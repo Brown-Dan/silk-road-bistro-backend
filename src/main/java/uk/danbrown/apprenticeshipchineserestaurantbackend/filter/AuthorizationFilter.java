@@ -2,10 +2,10 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.filter;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.common.lang.NonNullApi;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.hc.core5.http.ContentType;
@@ -28,9 +28,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final RequestContextManager requestContextManager;
 
     private static final Set<String> PROTECTED_PATHS = Set.of(
-      "/articles",
-      "/offers",
-     "/opening-hours"
+            "/articles",
+            "/offers",
+            "/opening-hours"
     );
 
     public AuthorizationFilter(JWTVerifier jwtVerifier, ObjectMapper objectMapper, RequestContextManager requestContextManager) {

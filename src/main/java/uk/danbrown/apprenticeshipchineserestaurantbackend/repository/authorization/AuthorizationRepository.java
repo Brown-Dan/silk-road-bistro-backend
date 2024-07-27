@@ -65,9 +65,11 @@ public class AuthorizationRepository {
 
     public UserAccount insertUserAccount(UserAccount userAccount) throws FailureInsertingEntityException {
         Optional<UserAccountEntity> userAccountEntity = db.insertInto(USER_ACCOUNT)
-                .set(ORGANIZATION_ACCOUNT.ORGANIZATION_ID, requestContextManager.getRequestContext().currentId())
-                .set(ORGANIZATION_ACCOUNT.EMAIL, userAccount.email())
-                .set(ORGANIZATION_ACCOUNT.PASSWORD, userAccount.password())
+                .set(USER_ACCOUNT.ORGANIZATION_ID, requestContextManager.getRequestContext().currentId())
+                .set(USER_ACCOUNT.EMAIL, userAccount.email())
+                .set(USER_ACCOUNT.PASSWORD, userAccount.password())
+                .set(USER_ACCOUNT.USERNAME, userAccount.username())
+                .set(USER_ACCOUNT.NAME, userAccount.name())
                 .returningResult().fetchOptionalInto(UserAccountEntity.class);
 
         return userAccountEntity.map(this::mapUserAccountEntityToUserAccount)
