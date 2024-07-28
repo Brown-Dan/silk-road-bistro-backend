@@ -20,8 +20,8 @@ public class ReservationService {
         return repository.insertReservation(reservation);
     }
 
-    public Reservation getReservationByUserId(String userId) {
-        return repository.getReservationByUserId(userId);
+    public List<Reservation> getReservationsByUserId(String userId) {
+        return repository.getReservationsByUserId(userId);
     }
 
     public List<Reservation> getReservations() {

@@ -45,12 +45,12 @@ public class OrdersRepository {
         return takeawayOrderEntity.map(this::mapOrderEntityToOrder).orElseThrow(() -> new FailureInsertingEntityException(order));
     }
 
-    public Order getOrdersByUserId(String userId) {
-        Optional<TakeawayOrderEntity> takeawayOrderEntity = db.selectFrom(TAKEAWAY_ORDER)
+    public List<Order> getOrdersByUserId(String userId) {
+        List<TakeawayOrderEntity> takeawayOrderEntity = db.selectFrom(TAKEAWAY_ORDER)
                 .where(TAKEAWAY_ORDER.USER_ID.eq(userId).and(TAKEAWAY_ORDER.ORGANIZATION_ID.eq(requestContextManager.getRequestContext().currentId())))
-                .fetchOptionalInto(TakeawayOrderEntity.class);
+                .fetchInto(TakeawayOrderEntity.class);
 
-        return takeawayOrderEntity.map(this::mapOrderEntityToOrder).orElse(null);
+        return takeawayOrderEntity.stream().map(this::mapOrderEntityToOrder).toList();
     }
 
     public List<Order> getOrders() {

@@ -34,12 +34,12 @@ public class ReservationRepository {
         return insertedEntity.map(this::mapReservationEntityToReservation).orElseThrow(() -> new FailureInsertingEntityException(reservation));
     }
 
-    public Reservation getReservationByUserId(String userId) {
-        Optional<ReservationEntity> reservationEntity = db.selectFrom(RESERVATION)
+    public List<Reservation> getReservationsByUserId(String userId) {
+        List<ReservationEntity> reservationEntity = db.selectFrom(RESERVATION)
                 .where(RESERVATION.USER_ID.eq(userId).and(RESERVATION.ORGANIZATION_ID.eq(requestContextManager.getRequestContext().currentId())))
-                .fetchOptionalInto(ReservationEntity.class);
+                .fetchInto(ReservationEntity.class);
 
-        return reservationEntity.map(this::mapReservationEntityToReservation).orElse(null);
+        return reservationEntity.stream().map(this::mapReservationEntityToReservation).toList();
     }
 
     public List<Reservation> getReservations() {

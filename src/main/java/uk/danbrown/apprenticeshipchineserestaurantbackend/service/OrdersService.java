@@ -20,7 +20,7 @@ public class OrdersService {
         return ordersRepository.insertOrder(order);
     }
 
-    public Order getOrdersByUserId(String userId) {
+    public List<Order> getOrdersByUserId(String userId) {
         return ordersRepository.getOrdersByUserId(userId);
     }
 
