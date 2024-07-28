@@ -7,13 +7,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.model.JwtResource;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.UserAccount;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.UserLoginRequest;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.LoginRequest;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Authorization.OrganizationAccount;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityAlreadyExistsWithIdException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.EntityNotFoundException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.FailureInsertingEntityException;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.exception.InvalidPasswordException;
-import uk.danbrown.apprenticeshipchineserestaurantbackend.service.authorization.UserAccountService;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.service.authorization.OrganizationAuthorizationService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,39 +21,39 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserAccountControllerTest {
+public class OrganizationAuthorizationControllerTest {
 
     @Mock
-    private UserAccountService userAccountService;
+    private OrganizationAuthorizationService organizationAuthorizationService;
 
-    private UserAccountController userAccountController;
+    private OrganizationAuthorizationController organizationAuthorizationController;
 
     @BeforeEach
     void setUp() {
-        userAccountController = new UserAccountController(userAccountService);
+        organizationAuthorizationController = new OrganizationAuthorizationController(organizationAuthorizationService);
     }
 
     @Test
     void createAccount_givenAccountRequest_shouldReturnJwt() throws EntityAlreadyExistsWithIdException, FailureInsertingEntityException {
-        UserAccount userAccount = new UserAccount("username", "password", "name", "email");
+        OrganizationAccount organizationAccount = new OrganizationAccount("id", "password", "email");
 
-        when(userAccountService.createAccount(userAccount)).thenReturn("jwt");
+        when(organizationAuthorizationService.createAccount(any())).thenReturn("jwt");
 
-        ResponseEntity<JwtResource> jwt = userAccountController.createAccount(userAccount);
+        ResponseEntity<JwtResource> jwt = organizationAuthorizationController.createAccount(organizationAccount);
 
-        verify(userAccountService).createAccount(userAccount);
+        verify(organizationAuthorizationService).createAccount(organizationAccount);
         assertThat(jwt).isEqualTo(ResponseEntity.status(201).body(new JwtResource("jwt")));
     }
 
     @Test
     void login_givenUserLoginRequest_shouldReturnJwt() throws InvalidPasswordException, EntityNotFoundException {
-        UserLoginRequest userLoginRequest = new UserLoginRequest("username", "password");
+        LoginRequest loginRequest = new LoginRequest("id", "password");
 
-        when(userAccountService.login(any())).thenReturn("jwt");
+        when(organizationAuthorizationService.login(any())).thenReturn("jwt");
 
-        ResponseEntity<JwtResource> jwt = userAccountController.login(userLoginRequest);
+        ResponseEntity<JwtResource> jwt = organizationAuthorizationController.login(loginRequest);
 
-        verify(userAccountService).login(userLoginRequest);
+        verify(organizationAuthorizationService).login(loginRequest);
         assertThat(jwt).isEqualTo(ResponseEntity.status(200).body(new JwtResource("jwt")));
     }
 }
