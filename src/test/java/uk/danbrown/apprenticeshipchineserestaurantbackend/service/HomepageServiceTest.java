@@ -21,6 +21,7 @@ import java.util.List;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article.Builder.anArticle;
@@ -59,12 +60,12 @@ public class HomepageServiceTest {
         when(homepageRepository.getHomepage()).thenReturn(getEmptyHomepage());
         when(articlesService.getArticles(any())).thenReturn(singletonList(getArticle()));
         when(openingHoursService.getOpeningHours()).thenReturn(getOpeningHours());
-        when(offerService.getOffers(any(), any())).thenReturn(getOffers());
+        when(offerService.getOffers(any(), anyBoolean())).thenReturn(getOffers());
 
         Homepage result = homepageService.getHomepage();
 
         verify(articlesService).getArticles(3);
-        verify(offerService).getOffers(3, true);
+        verify(offerService).getOffers(3, false);
 
         assertThat(result).isEqualTo(getHomepage());
 
@@ -74,6 +75,7 @@ public class HomepageServiceTest {
         return aHomepage()
                 .withOpeningHours(getOpeningHours())
                 .withArticles(singletonList(getArticle()))
+                .withOffers(getOffers())
                 .build();
     }
 

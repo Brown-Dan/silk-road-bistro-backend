@@ -76,7 +76,7 @@ public class OpeningHoursControllerTest extends ControllerTestBase {
 
         verifyNoInteractions(openingHoursService);
 
-        assertThat(mvcResult).hasStatus(HttpStatus.BAD_REQUEST).hasBody("{\"errors\":[{\"key\":\"INVALID_REQUEST_BODY\",\"message\":\"'openingTime' must take place before 'closingTime'.\"}]}");
+        assertThat(mvcResult).hasStatus(HttpStatus.BAD_REQUEST).hasBody("{\"errors\":[{\"key\":\"INVALID_REQUEST_BODY\",\"message\":\"opening time must take place before closing time\"}]}");
     }
 
     @Test

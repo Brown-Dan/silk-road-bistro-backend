@@ -31,6 +31,6 @@ public class ReservationController {
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getReservations() {
-        return ResponseEntity.ok(reservationService.getReservations());
+        return ResponseEntity.ok(reservationService.getReservations().reversed());
     }
 }

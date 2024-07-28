@@ -33,7 +33,8 @@ public class OpeningHoursRepository {
     }
 
     public OpeningHours insertOpeningHours(OpeningHours openingHours) throws FailureInsertingEntityException {
-        Optional<OpeningHoursEntity> insertedOpeningHours = db.update(OPENING_HOURS)
+        db.deleteFrom(OPENING_HOURS).execute();
+        Optional<OpeningHoursEntity> insertedOpeningHours = db.insertInto(OPENING_HOURS)
                 .set(OPENING_HOURS.OPENING_HOURS_, openingHoursMapper.toJsonString(openingHours))
                 .set(OPENING_HOURS.ID, requestContextManager.getRequestContext().currentId())
                 .returningResult().fetchOptionalInto(OpeningHoursEntity.class);

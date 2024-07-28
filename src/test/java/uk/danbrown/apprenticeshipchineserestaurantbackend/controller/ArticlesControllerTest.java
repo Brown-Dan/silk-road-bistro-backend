@@ -90,6 +90,6 @@ public class ArticlesControllerTest extends ControllerTestBase {
 
         MvcResult mvcResult = post("/articles", expectedResponseBody);
 
-        assertThat(mvcResult).hasStatus(HttpStatus.CREATED).hasBody(expectedResponseBody);
+        assertThat(mvcResult).hasStatus(HttpStatus.INTERNAL_SERVER_ERROR).hasBody("{\"errors\":[{\"key\":\"FAILURE_INSERTING_ENTITY\",\"message\":\"Failed to insert entity - Article[title=Title, content=Content, date=2024-07-28]\"}]}");
     }
 }

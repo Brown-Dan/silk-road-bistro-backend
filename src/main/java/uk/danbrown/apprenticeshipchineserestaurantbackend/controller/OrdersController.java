@@ -28,7 +28,8 @@ public class OrdersController {
         return ResponseEntity.ok(ordersService.getOrdersByUserId(userId).reversed());
     }
 
+    @GetMapping
     public ResponseEntity<List<Order>> getOrders() {
-        return ResponseEntity.ok(ordersService.getOrders());
+        return ResponseEntity.ok(ordersService.getOrders().reversed());
     }
 }

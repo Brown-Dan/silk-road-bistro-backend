@@ -3,19 +3,22 @@ package uk.danbrown.apprenticeshipchineserestaurantbackend.utils;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import uk.co.autotrader.generated.tables.Homepage;
-import uk.co.autotrader.generated.tables.Offer;
-import uk.co.autotrader.generated.tables.OpeningHours;
+import uk.co.autotrader.generated.tables.*;
 import uk.co.autotrader.generated.tables.pojos.ArticleEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static uk.co.autotrader.generated.Tables.USER_ACCOUNT;
 import static uk.co.autotrader.generated.tables.Article.ARTICLE;
 import static uk.co.autotrader.generated.tables.Homepage.HOMEPAGE;
+import static uk.co.autotrader.generated.tables.Messages.MESSAGES;
 import static uk.co.autotrader.generated.tables.Offer.OFFER;
 import static uk.co.autotrader.generated.tables.OpeningHours.OPENING_HOURS;
+import static uk.co.autotrader.generated.tables.OrganizationAccount.ORGANIZATION_ACCOUNT;
+import static uk.co.autotrader.generated.tables.Reservation.RESERVATION;
+import static uk.co.autotrader.generated.tables.TakeawayOrder.TAKEAWAY_ORDER;
 
 public class DatabaseHelper {
 
@@ -39,6 +42,11 @@ public class DatabaseHelper {
         db.deleteFrom(OPENING_HOURS).execute();
         db.deleteFrom(OFFER).execute();
         db.deleteFrom(HOMEPAGE).execute();
+        db.deleteFrom(MESSAGES).execute();
+        db.deleteFrom(ORGANIZATION_ACCOUNT).execute();
+        db.deleteFrom(RESERVATION).execute();
+        db.deleteFrom(TAKEAWAY_ORDER).execute();
+        db.deleteFrom(USER_ACCOUNT).execute();
     }
 
     public void insertOpeningHoursJson(String openingHours, String homepageId) {
