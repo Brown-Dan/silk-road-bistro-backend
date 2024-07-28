@@ -26,7 +26,7 @@ public class ReservationController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Reservation>> getReservationsByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok(reservationService.getReservationsByUserId(userId));
+        return ResponseEntity.ok(reservationService.getReservationsByUserId(userId).reversed());
     }
 
     @GetMapping

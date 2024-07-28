@@ -25,7 +25,7 @@ public class OrdersController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok(ordersService.getOrdersByUserId(userId));
+        return ResponseEntity.ok(ordersService.getOrdersByUserId(userId).reversed());
     }
 
     public ResponseEntity<List<Order>> getOrders() {

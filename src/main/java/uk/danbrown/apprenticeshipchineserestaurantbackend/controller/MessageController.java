@@ -20,10 +20,9 @@ public class MessageController {
 
     @GetMapping
     public ResponseEntity<List<Message>> getMessages() {
-        return ResponseEntity.ok(messageService.getMessages());
+        return ResponseEntity.ok(messageService.getMessages().reversed());
     }
 
-    // TODO time issue here!
     @PostMapping
     public ResponseEntity<Message> insertMessage(@RequestBody Message message) throws FailureInsertingEntityException {
         return ResponseEntity.status(201).body(messageService.insertMessage(message));
