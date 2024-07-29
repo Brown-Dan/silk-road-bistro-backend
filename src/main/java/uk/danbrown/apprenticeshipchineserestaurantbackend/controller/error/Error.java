@@ -40,8 +40,4 @@ public record Error(ErrorKey key, String message) {
     public static Error invalidPassword() {
         return new Error(INVALID_PASSWORD, "Provided password does not match existing password.");
     }
-
-    public static Error unknownError() {
-        return new Error(UNKNOWN_ERROR, "Something went wrong - please try again later.");
-    }
 }

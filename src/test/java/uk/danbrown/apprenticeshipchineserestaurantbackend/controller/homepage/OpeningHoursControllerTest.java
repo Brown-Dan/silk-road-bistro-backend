@@ -1,4 +1,4 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.ControllerTestBase;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage.OpeningHoursController;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpenCloseTime;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.OpeningHours;
@@ -116,6 +117,19 @@ public class OpeningHoursControllerTest extends ControllerTestBase {
         verifyNoInteractions(openingHoursService);
 
         assertThat(mvcResult).hasStatus(HttpStatus.BAD_REQUEST).hasBody("{\"errors\":[{\"key\":\"INVALID_REQUEST_BODY\",\"message\":\"Either 'closed' must be true or 'openingTime' and 'closingTime' must be provided.\"}]}");
+    }
+
+    @Test
+    void createOpeningHours_givenNullOpeningTimeOrClosingTimeProvided_shouldReturnBadRequest() throws JsonProcessingException {
+        OpeningHours invalidOpeningHours = getOpeningHours().cloneBuilder()
+                .withMonday(null)
+                .build();
+
+        MvcResult mvcResult = post("/opening-hours", objectMapper.writeValueAsString(invalidOpeningHours));
+
+        verifyNoInteractions(openingHoursService);
+
+        assertThat(mvcResult).hasStatus(HttpStatus.BAD_REQUEST).hasBody("{\"errors\":[{\"key\":\"INVALID_REQUEST_BODY\",\"message\":\"All fields must be provided for day - 'Monday'\"}]}");
     }
 
     private OpeningHours getOpeningHours() {

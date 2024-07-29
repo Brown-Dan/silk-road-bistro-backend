@@ -1,10 +1,11 @@
-package uk.danbrown.apprenticeshipchineserestaurantbackend.controller;
+package uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
+import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.ControllerTestBase;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.homepage.ArticlesController;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.controller.mapper.ArticleResourceMapper;
 import uk.danbrown.apprenticeshipchineserestaurantbackend.domain.Homepage.Article;
@@ -30,12 +31,14 @@ public class ArticlesControllerTest extends ControllerTestBase {
     @MockBean
     ArticleResourceMapper articleResourceMapper;
 
+    private final static LocalDate INSERTED_DATE = LocalDate.of(2024, 7, 28);
+
     @Test
     void getArticles_givenLimit_shouldReturnArticles() {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
-                .withDate(LocalDate.now()).build();
+                .withDate(INSERTED_DATE).build();
         String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
         Integer limit = 3;
 
@@ -52,7 +55,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
-                .withDate(LocalDate.now()).build();
+                .withDate(INSERTED_DATE).build();
         String expectedResponseBody = "{\"articles\":[{\"title\":\"Title\",\"content\":\"Content\"}]}";
 
         when(articlesService.getArticles(any())).thenReturn(singletonList(expectedArticle));
@@ -68,7 +71,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
-                .withDate(LocalDate.now()).build();
+                .withDate(INSERTED_DATE).build();
         String expectedResponseBody = "{\"title\":\"Title\",\"content\":\"Content\"}";
 
         when(articlesService.createArticle(any())).thenReturn(expectedArticle);
@@ -83,7 +86,7 @@ public class ArticlesControllerTest extends ControllerTestBase {
         Article expectedArticle = anArticle()
                 .withTitle("Title")
                 .withContent("Content")
-                .withDate(LocalDate.now()).build();
+                .withDate(INSERTED_DATE).build();
         String expectedResponseBody = "{\"title\":\"Title\",\"content\":\"Content\"}";
 
         when(articlesService.createArticle(any())).thenThrow(new FailureInsertingEntityException(expectedArticle));
@@ -91,5 +94,15 @@ public class ArticlesControllerTest extends ControllerTestBase {
         MvcResult mvcResult = post("/articles", expectedResponseBody);
 
         assertThat(mvcResult).hasStatus(HttpStatus.INTERNAL_SERVER_ERROR).hasBody("{\"errors\":[{\"key\":\"FAILURE_INSERTING_ENTITY\",\"message\":\"Failed to insert entity - Article[title=Title, content=Content, date=2024-07-28]\"}]}");
+    }
+
+    @Test
+    void deleteArticle_shouldCallArticlesService_andReturn204() {
+        String articleTitle = "Title";
+
+        MvcResult mvcResult = delete("/articles?articleTitle=%s".formatted(articleTitle));
+
+        verify(articlesService).deleteArticle(articleTitle);
+        assertThat(mvcResult).hasStatus(HttpStatus.NO_CONTENT);
     }
 }

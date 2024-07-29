@@ -21,7 +21,7 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) throws FailureInsertingEntityException {
-        return ResponseEntity.ok(reservationService.createReservation(reservation));
+        return ResponseEntity.status(201).body(reservationService.createReservation(reservation));
     }
 
     @GetMapping("/{userId}")
